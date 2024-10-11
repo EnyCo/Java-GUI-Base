@@ -27,7 +27,7 @@ public class ProcessInput implements Runnable {
             
             if (Main.getKeyboard().keyDownOnce( KeyEvent.VK_ESCAPE )) {
                 Main.setGameOver(true);
-            }
+            } 
         }
     }
 }
