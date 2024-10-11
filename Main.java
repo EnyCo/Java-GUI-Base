@@ -16,7 +16,7 @@ public class Main extends JFrame
 	static Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
     static Canvas canvas;
 
-    final static int HEIGHT = screenSize.height-70;
+    final static int HEIGHT = screenSize.height;
     final static int WIDTH = screenSize.width;
 	final static int RIGHT_SHIFT = WIDTH/2 - HEIGHT/2;
 
@@ -57,8 +57,12 @@ public class Main extends JFrame
     	Thread vOutput = new Thread(new VisualOutput());
     	vOutput.start();
 
+        Thread aOutput = new Thread(new AudioOutput());
+    	aOutput.start();
+
         Thread pInput = new Thread(new ProcessInput());
     	pInput.start();
+
 
     	while (true) {// this keep everything running
 			//Thread.sleep(10000000);

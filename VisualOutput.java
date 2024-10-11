@@ -4,6 +4,7 @@ import java.awt.image.*;
 public class VisualOutput implements Runnable {
     private final static int grid_size = Main.HEIGHT;
     
+    @Override
 	public void run() {
 		Main.canvas.createBufferStrategy( 2 );
         BufferStrategy buffer = Main.canvas.getBufferStrategy();
@@ -50,7 +51,5 @@ public class VisualOutput implements Runnable {
 	private static void drawField(Graphics g2d) {
         g2d.setColor(Color.BLACK);
         g2d.fillRect(Main.RIGHT_SHIFT, 0, grid_size, grid_size);
-        
-
-	}
+    }
 }

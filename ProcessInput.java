@@ -10,6 +10,7 @@ import java.awt.*;
 
 
 public class ProcessInput implements Runnable {
+    @Override
     public void run()
     {
         while (true) {
