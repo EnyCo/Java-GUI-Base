@@ -1,4 +1,5 @@
 import java.awt.*;
+import java.awt.event.*;
 //import java.awt.image.*;
 //import java.io.*;
 //import java.awt.datatransfer.*;
@@ -8,21 +9,24 @@ import java.awt.*;
 //import javax.imageio.*;
 //import javax.swing.*;
 
-
 public class ProcessInput implements Runnable {
     @Override
-    public void run()
-    {
+    public void run() {
         while (true) {
-            Main.keyboard.updateKeyStates();// Poll the keyboard
-            Main.mouse.updateButtonStates();// poll the mouse
+            Main.getKeyboard().updateKeyStates();// Poll the keyboard
+            Main.getMouse().updateButtonStates();// poll the mouse
                 
-            Point p = Main.mouse.getPosition();
-            int x = (int)(p.getX() - Main.RIGHT_SHIFT);
+            Point p = Main.getMouse().getPosition();
+            int x = (int)(p.getX() - Main.getShift());
             int y = (int)p.getY();
 
-            if (Main.mouse.buttonDownOnce(1)) {
+            if (Main.getMouse().buttonDownOnce(1)) {
                 System.out.println(x + " : " + y);
+            }
+
+            
+            if (Main.getKeyboard().keyDownOnce( KeyEvent.VK_ESCAPE )) {
+                Main.setGameOver(true);
             }
         }
     }

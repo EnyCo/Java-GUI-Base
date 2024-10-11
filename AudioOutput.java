@@ -5,7 +5,7 @@ import javax.sound.sampled.AudioSystem;
 import javax.sound.sampled.Clip;
 
 public class AudioOutput implements Runnable {
-	static String folderName = "audio/";
+	private static String folderName = "audio/";
 	
 	@Override
 	public void run() {

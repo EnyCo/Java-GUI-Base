@@ -1,7 +1,3 @@
-/**
- * VERSION 2.0
- * HAS MULTITHREADING
- */
 import java.io.*;
 import java.awt.*;
 import java.awt.datatransfer.*;
@@ -13,16 +9,70 @@ import javax.swing.*;
 
 public class Main extends JFrame
 {
-	static Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
-    static Canvas canvas;
+    /*
+     * is the object that is read from and is printed to
+     */
+    private static Canvas canvas;
+    public static Canvas getCanvas() {
+        return canvas;
+    }
 
-    final static int HEIGHT = screenSize.height;
-    final static int WIDTH = screenSize.width;
-	final static int RIGHT_SHIFT = WIDTH/2 - HEIGHT/2;
-
-    static KeyboardInput keyboard = new KeyboardInput();
-    static MouseInput mouse = new MouseInput(); 
+    /*
+     * keyboard reader
+     */
+    private static KeyboardInput keyboard = new KeyboardInput();
+    public static KeyboardInput getKeyboard() {
+        return keyboard;
+    }
     
+    /*
+     * mouse reader
+     */
+    private static MouseInput mouse = new MouseInput();
+    public static MouseInput getMouse() {
+        return mouse;
+    }
+    
+    /*
+     * indicator for when to end run
+     */
+    private static boolean gameOver = false;
+    public static void setGameOver(boolean gO) {
+        gameOver = gO;
+    }
+    public static boolean getGameOver() {
+        return gameOver;
+    }
+
+	static Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
+        
+    /*
+     * screen height in pixels
+     */
+    private final static int HEIGHT = screenSize.height;
+    public static int getHeightScreen() {
+        return HEIGHT;
+    }
+    
+    /*
+     * screen width in pixels
+     */
+    private final static int WIDTH = screenSize.width;
+    public static int getWidthScreen() {
+        return WIDTH;
+    }
+    
+    /*
+     * value that refers to the pixel distance between:
+     *      the left edge of screen 
+     *      the right edge of the visual canvas
+     * so that the visual canvas is centered
+     */
+	private final static int SHIFT = WIDTH/2 - HEIGHT/2;
+    public static int getShift() {
+        return SHIFT;
+    }
+
     public Main() 
     {
         setIgnoreRepaint( true );
@@ -64,8 +114,8 @@ public class Main extends JFrame
     	pInput.start();
 
 
-    	while (true) {// this keep everything running
-			//Thread.sleep(10000000);
+    	while (!gameOver) {// this keep everything running
+			Thread.sleep(10);
     	}
     }
 }

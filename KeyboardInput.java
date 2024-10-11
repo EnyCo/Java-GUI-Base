@@ -41,9 +41,7 @@ public class KeyboardInput implements KeyListener{
     }
         
     public synchronized void keyPressed(KeyEvent e){
-        int keyCode = e.getKeyCode();
-        
-        
+        int keyCode = e.getKeyCode();        
         if( keyCode >= 0 && keyCode < NUM_KEYS ){
             currentKeys[keyCode] = true;
         }
