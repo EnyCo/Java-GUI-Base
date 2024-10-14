@@ -19,13 +19,17 @@ public class VisualOutput implements Runnable {
         
         while(true) {
             try {
-                
                 // Clear the back buffer          
                 g2d = bi.createGraphics();
                 g2d.setColor( background );
                 g2d.fillRect( 0, 0, Main.getWidthScreen(), Main.getHeightScreen() );
-                
                 drawField(g2d);
+                
+
+                Point p = Main.getMouse().getPosition(); 
+                int x = (int)(p.getX());
+                int y = (int)p.getY();
+
                 
                 graphics = buffer.getDrawGraphics();
                 graphics.drawImage( bi, 0, 0, null );

@@ -16,14 +16,9 @@ public class ProcessInput implements Runnable {
             Main.getKeyboard().updateKeyStates();// Poll the keyboard
             Main.getMouse().updateButtonStates();// poll the mouse
                 
-            Point p = Main.getMouse().getPosition();
-            int x = (int)(p.getX() - Main.getShift());
+            Point p = Main.getMouse().getPosition(); 
+            int x = (int)(p.getX());
             int y = (int)p.getY();
-
-            if (Main.getMouse().buttonDownOnce(1)) {
-                System.out.println(x + " : " + y);
-            }
-
             
             if (Main.getKeyboard().keyDownOnce( KeyEvent.VK_ESCAPE )) {
                 Main.setGameOver(true);
