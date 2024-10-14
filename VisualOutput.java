@@ -30,6 +30,8 @@ public class VisualOutput implements Runnable {
                 int x = (int)(p.getX());
                 int y = (int)p.getY();
 
+                g2d.setColor( Color.WHITE );
+                g2d.drawString(x + ", " + y, x, y);
                 
                 graphics = buffer.getDrawGraphics();
                 graphics.drawImage( bi, 0, 0, null );

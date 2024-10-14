@@ -1,37 +1,20 @@
 import java.awt.*;
 
-public class Button {
+public class Entity {
     private Point loc;
     private int width;
     private int height;
-    private String file;
 
-    public Button (int x, int y, int w, int h, String f) {
+    public Entity (int x, int y, int w, int h) {
         loc = new Point(x, y);
         width = w;
         height = h;
-        file = f;
     }
-    public Button (int x, int y, int w, int h) {
-        loc = new Point(x, y);
-        width = w;
-        height = h;
-        file = "";
-    }
-    public Button (Point l, int w, int h, String f) {
+    public Entity (Point l, int w, int h) {
         loc = l;
         width = w;
         height = h;
-        file = f;
     }
-    public Button (Point l, int w, int h) {
-        loc = l;
-        width = w;
-        height = h;
-        file = "";
-    }
-
-    // entity, button, visualIcon
 
     public void setLoc(Point l) {
         loc = l;
@@ -51,7 +34,7 @@ public class Button {
     }
 
 
-    public void getWidth(int w) {
+    public void setWidth(int w) {
         width = w;
     }
     public int getWidth() {
@@ -65,13 +48,6 @@ public class Button {
         return height;
     }
 
-    public void setFile(String f) {
-        file = f;
-    }
-    public String getFile() {
-        return file;
-    }
-
     public boolean isHover(Point m){
         return (int)m.getX() >= getX() && (int)m.getX() <= getX() + width 
             && (int)m.getY() >= getY() && (int)m.getY() <= getY() + height;
@@ -82,3 +58,4 @@ public class Button {
     }
     
 }
+

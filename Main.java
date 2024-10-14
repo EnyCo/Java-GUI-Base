@@ -114,6 +114,9 @@ public class Main extends JFrame
     	pInput.start();
 
 
+        //all major screen button and variable data here.
+
+
     	while (!gameOver) {// this keep everything running
 			Thread.sleep(10);
     	}
