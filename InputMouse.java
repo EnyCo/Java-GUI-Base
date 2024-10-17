@@ -1,6 +1,6 @@
 import java.awt.Point;
 import java.awt.event.*;
-public class MouseInput implements MouseListener, MouseMotionListener, MouseWheelListener{
+public class InputMouse implements MouseListener, MouseMotionListener, MouseWheelListener{
     private static final int BUTTON_COUNT = 3;// can be more
     private Point mousePos = new Point( 0, 0 );
     private Point currentPos = new Point( 0, 0 );
@@ -13,7 +13,7 @@ public class MouseInput implements MouseListener, MouseMotionListener, MouseWhee
         RELEASED, PRESSED, ONCE
     }
         
-    public MouseInput(){
+    public InputMouse(){
         for(int i = 0; i < BUTTON_COUNT; i++){// set all buttons to not pressed
           buttons[i] = MouseState.RELEASED;
         }

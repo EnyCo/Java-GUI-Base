@@ -4,8 +4,8 @@ import javax.sound.sampled.AudioInputStream;
 import javax.sound.sampled.AudioSystem;
 import javax.sound.sampled.Clip;
 
-public class AudioOutput implements Runnable {
-	private static String folderName = "audio/";
+public class ThreadOutputAudio implements Runnable {
+	//private static String folderName = "audio/";
 	
 	@Override
 	public void run() {

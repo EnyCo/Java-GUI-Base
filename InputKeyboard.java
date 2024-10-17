@@ -1,7 +1,7 @@
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 
-public class KeyboardInput implements KeyListener{ 
+public class InputKeyboard implements KeyListener{ 
     private static final int NUM_KEYS = 522;// 256 if downsizing is needed
         
     private enum KeyState{
@@ -13,7 +13,7 @@ public class KeyboardInput implements KeyListener{
     
     private static char val = ' ';
     
-    public KeyboardInput(){ 
+    public InputKeyboard(){ 
         for(int i = 0; i < NUM_KEYS; i++){// sets all keys to not pressed
             keys[i] = KeyState.RELEASED;
         }

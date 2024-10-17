@@ -9,7 +9,7 @@ import java.awt.event.*;
 //import javax.imageio.*;
 //import javax.swing.*;
 
-public class ProcessInput implements Runnable {
+public class ThreadInputProcess implements Runnable {
     @Override
     public void run() {
         while (true) {
@@ -17,8 +17,8 @@ public class ProcessInput implements Runnable {
             Main.getMouse().updateButtonStates();// poll the mouse
                 
             Point p = Main.getMouse().getPosition(); 
-            int x = (int)(p.getX());
-            int y = (int)p.getY();
+            //int x = (int)(p.getX());
+            //int y = (int)p.getY();
             
             if (Main.getKeyboard().keyDownOnce( KeyEvent.VK_ESCAPE )) {
                 Main.setGameOver(true);

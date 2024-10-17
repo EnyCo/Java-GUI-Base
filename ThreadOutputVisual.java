@@ -1,7 +1,7 @@
 import java.awt.*;
 import java.awt.image.*;
 
-public class VisualOutput implements Runnable {
+public class ThreadOutputVisual implements Runnable {
     private final static int grid_size = Main.getHeightScreen();
     
     @Override

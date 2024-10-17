@@ -20,16 +20,16 @@ public class Main extends JFrame
     /*
      * keyboard reader
      */
-    private static KeyboardInput keyboard = new KeyboardInput();
-    public static KeyboardInput getKeyboard() {
+    private static InputKeyboard keyboard = new InputKeyboard();
+    public static InputKeyboard getKeyboard() {
         return keyboard;
     }
     
     /*
      * mouse reader
      */
-    private static MouseInput mouse = new MouseInput();
-    public static MouseInput getMouse() {
+    private static InputMouse mouse = new InputMouse();
+    public static InputMouse getMouse() {
         return mouse;
     }
     
@@ -104,14 +104,14 @@ public class Main extends JFrame
     }
     
     public void run() throws UnsupportedFlavorException, InterruptedException {
-    	Thread vOutput = new Thread(new VisualOutput());
-    	vOutput.start();
+    	Thread outputVisual = new Thread(new ThreadOutputVisual());
+    	outputVisual.start();
 
-        Thread aOutput = new Thread(new AudioOutput());
-    	aOutput.start();
+        Thread outputAudio = new Thread(new ThreadOutputAudio());
+    	outputAudio.start();
 
-        Thread pInput = new Thread(new ProcessInput());
-    	pInput.start();
+        Thread inputProcess = new Thread(new ThreadInputProcess());
+    	inputProcess.start();
 
 
         //all major screen button and variable data here.
