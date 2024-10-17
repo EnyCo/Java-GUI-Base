@@ -61,4 +61,4 @@ public class VisualOutput implements Runnable {
         g2d.setColor(Color.BLACK);
         g2d.fillRect(Main.getShift(), 0, grid_size, grid_size);
     }
-}
+} 
