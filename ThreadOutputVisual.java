@@ -32,6 +32,17 @@ public class ThreadOutputVisual implements Runnable {
 
                 g2d.setColor( Color.WHITE );
                 g2d.drawString(x + ", " + y, x, y);
+                for (int i = 0; i < Main.buttons.size(); i++) {
+                    g2d.fillRect(Main.buttons.get(i).getX(), Main.buttons.get(i).getY(), 
+                    Main.buttons.get(i).getWidth(), Main.buttons.get(i).getHeight());
+                }
+                
+                g2d.setColor( Color.LIGHT_GRAY );
+                for (int i = 0; i < Main.buttons.size(); i++) {
+                    g2d.drawRect(Main.buttons.get(i).getX(), Main.buttons.get(i).getY(), 
+                    Main.buttons.get(i).getWidth(), Main.buttons.get(i).getHeight());
+                }
+
                 
                 graphics = buffer.getDrawGraphics();
                 graphics.drawImage( bi, 0, 0, null );
@@ -39,7 +50,7 @@ public class ThreadOutputVisual implements Runnable {
                     buffer.show();
                 
                 try {
-					Thread.sleep(50);
+					Thread.sleep(13);
 				} catch (InterruptedException e) {
 					System.out.println("OUTPUT CLOCK NOT WORKING");
 					e.printStackTrace();

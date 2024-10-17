@@ -3,7 +3,7 @@ import java.awt.*;
 import java.awt.datatransfer.*;
 //import java.awt.geom.Point2D;
 //import java.awt.image.*;
-//import java.util.*;
+import java.util.*;
 //import javax.imageio.*;
 import javax.swing.*;
 
@@ -94,6 +94,13 @@ public class Main extends JFrame
         canvas.addMouseMotionListener( mouse );
     }
     
+
+    //should be list of buttons for each screen (may be in a screen object)
+    static final ArrayList<Button> buttons = new ArrayList<Button>(Arrays.asList(
+        new Button(10, 10, 100, 30, new CommandSave()), //xyz function
+        new Button(200, 10, 100, 30, new CommandSelect())));// xyz function
+
+
     public static void main(String[] args) throws UnsupportedFlavorException,InterruptedException, IOException
     {
         Main app = new Main();
