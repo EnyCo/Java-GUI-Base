@@ -1,10 +1,7 @@
 import java.io.*;
 import java.awt.*;
 import java.awt.datatransfer.*;
-//import java.awt.geom.Point2D;
-//import java.awt.image.*;
 import java.util.*;
-//import javax.imageio.*;
 import javax.swing.*;
 
 public class Main extends JFrame
@@ -96,13 +93,17 @@ public class Main extends JFrame
     
 
     //should be list of buttons for each screen (may be in a screen object)
-    static final ArrayList<Button> buttons = new ArrayList<Button>(Arrays.asList(
-        new Button(10, 10, 100, 30, new CommandSave()), //xyz function
-        new Button(200, 10, 100, 30, new CommandSelect())));// xyz function
+    static final ArrayList<Screen> SCREENS = new ArrayList<Screen>(Arrays.asList(new Screen("Start Screen", new ArrayList<Button>(Arrays.asList(new ButtonTest(WIDTH/2 - 50, HEIGHT/2 - 10, 100, 20, "Start!"))), true),
+                                                                                 new Screen("End Screen", new ArrayList<Button>(Arrays.asList(new ButtonTest(WIDTH/2 - 50, HEIGHT/2 - 10, 100, 20, "End!"))), false)));// set all future to false
+                                                                   
+    
+    static Screen activeScreen = SCREENS.get(0);// makes code more efficient
 
+    //static String t = "";
 
     public static void main(String[] args) throws UnsupportedFlavorException,InterruptedException, IOException
     {
+        System.out.println(activeScreen.getName() + " is the active screen now!");
         Main app = new Main();
         app.setTitle( "Main" );
         app.setVisible( true );

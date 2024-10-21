@@ -1,14 +1,21 @@
-public class Button {
+public abstract class Button {
     private int x, y;
     private int width, height;
-    private Command command;
+    private String text = "";
 
-    public Button (int x, int y, int width, int height, Command command) {
+    public Button (int x, int y, int width, int height, String text) {
         this.x = x;
         this.y = y;
         this.width = width;
         this.height = height;
-        this.command = command;
+        this.text = text;
+    }
+
+    public Button (int x, int y, int width, int height) {
+        this.x = x;
+        this.y = y;
+        this.width = width;
+        this.height = height;
     }
 
     public int getX(){
@@ -39,15 +46,16 @@ public class Button {
         this.height = height;
     }
 
+    public String getText(){
+        return text;
+    }
+
     public boolean isHover(int x2, int y2) {
         return x2 >= x && y2 >= y 
             && x2 <= x + width && y2 <= y + height;
     }
 
     public void onClick() {
-        command.execute();
-    }
-    public void onClick(int param) {
-        command.execute(param);
+        System.out.println("default abstract execute ran");
     }
 }
