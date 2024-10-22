@@ -38,6 +38,15 @@ public class InputKeyboard implements KeyListener{
         return keyStates.getOrDefault(keyCode, false);
     }
 
+    public boolean isKeyPressedOnce(int keyCode) {
+        if (keyStates.getOrDefault(keyCode, false)) {
+            keyStates.put(keyCode, false); // Reset state after checking
+            return true;
+        }
+        return false;
+    }
+
+
     public static char getVal(){
         return val;
     }

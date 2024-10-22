@@ -41,7 +41,7 @@ public class Main extends JFrame
         return gameOver;
     }
 
-	static Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
+    static Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
         
     /*
      * screen height in pixels
@@ -70,6 +70,31 @@ public class Main extends JFrame
         return SHIFT;
     }
 
+
+     /*
+     * should be list of buttons for each screen (may be in a screen object)
+     */
+    static final ArrayList<Screen> SCREENS = new ArrayList<Screen>(Arrays.asList(new Screen("Start Screen", new ArrayList<GUIComponent>(Arrays.asList(
+                                                                                    new ButtonExitYes(false, WIDTH/4 - 50, HEIGHT/2 - 10, 100, 20, "Yes"),
+                                                                                    new ButtonExitNo(false, WIDTH*3/4 - 50, HEIGHT/2 - 10, 100, 20, "No!"),
+                                                                                    new ButtonTestStart(true, WIDTH/2 - 50, HEIGHT/2 - 10, 100, 20, "Start!")))),
+                                                                                 new Screen("End Screen", new ArrayList<GUIComponent>(Arrays.asList(
+                                                                                    new ButtonExitYes(false, WIDTH/4 - 50, HEIGHT/2 - 10, 100, 20, "Yes"),
+                                                                                    new ButtonExitNo(false, WIDTH*3/4 - 50, HEIGHT/2 - 10, 100, 20, "No!"),
+                                                                                    new ButtonTestEnd(true, WIDTH/2 - 50, HEIGHT/2 - 10, 100, 20, "End!"))))));// set all future screens to false
+                                                                   
+    
+    private static Screen activeScreen = SCREENS.get(0);// makes code more efficient
+
+    public static void setActiveScreen(Screen aS){
+        activeScreen.getButtons().get(0).setActive(false); //ensure reset if screen changes
+        activeScreen.getButtons().get(1).setActive(false); //ensure reset if screen changes
+        activeScreen = aS;
+    }
+    public static Screen getActiveScreen(){
+        return activeScreen;
+    }
+
     public Main() 
     {
         setIgnoreRepaint( true );
@@ -92,12 +117,7 @@ public class Main extends JFrame
     }
     
 
-    //should be list of buttons for each screen (may be in a screen object)
-    static final ArrayList<Screen> SCREENS = new ArrayList<Screen>(Arrays.asList(new Screen("Start Screen", new ArrayList<Button>(Arrays.asList(new ButtonTest(WIDTH/2 - 50, HEIGHT/2 - 10, 100, 20, "Start!"))), true),
-                                                                                 new Screen("End Screen", new ArrayList<Button>(Arrays.asList(new ButtonTest(WIDTH/2 - 50, HEIGHT/2 - 10, 100, 20, "End!"))), false)));// set all future to false
-                                                                   
-    
-    static Screen activeScreen = SCREENS.get(0);// makes code more efficient
+
 
     //static String t = "";
 

@@ -9,17 +9,15 @@ public class ThreadInputProcess implements Runnable {
             int x = (int)(p.getX());
             int y = (int)p.getY();
 
-            
-
-            for (int i = 0; i < Main.activeScreen.getButtons().size(); i++) {
-                if (Main.activeScreen.getButtons().get(i).isHover(x, y) && Main.getMouse().isButtonClicked(1)){
-                    Main.activeScreen.getButtons().get(i).onClick();
+            for (int i = 0; i < Main.getActiveScreen().getButtons().size(); i++) {
+                if (Main.getActiveScreen().getButtons().get(i).isHover(x, y) && Main.getMouse().isButtonClicked(1)){
+                    Main.getActiveScreen().getButtons().get(i).onClick();
                 }
             }                
-
             
-            if (Main.getKeyboard().isKeyPressed( KeyEvent.VK_ESCAPE )) {
-                Main.setGameOver(true);
+            if (Main.getKeyboard().isKeyPressedOnce( KeyEvent.VK_ESCAPE )) {
+                Main.getActiveScreen().getButtons().get(0).setActive(!Main.getActiveScreen().getButtons().get(0).getActive());// sets no button to on
+                Main.getActiveScreen().getButtons().get(1).setActive(!Main.getActiveScreen().getButtons().get(1).getActive());// sets yes button to on
             }
 
             try {

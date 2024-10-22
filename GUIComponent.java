@@ -1,9 +1,11 @@
-public abstract class Button {
+public abstract class GUIComponent {
+    private boolean active = false;
     private int x, y;
     private int width, height;
     private String text = "";
 
-    public Button (int x, int y, int width, int height, String text) {
+    public GUIComponent (boolean active, int x, int y, int width, int height, String text) {
+        this.active = active;
         this.x = x;
         this.y = y;
         this.width = width;
@@ -11,11 +13,19 @@ public abstract class Button {
         this.text = text;
     }
 
-    public Button (int x, int y, int width, int height) {
+    public GUIComponent (boolean active, int x, int y, int width, int height) {
+        this.active = active;
         this.x = x;
         this.y = y;
         this.width = width;
         this.height = height;
+    }
+
+    public boolean getActive(){
+        return active;
+    }
+    public void setActive(boolean active){
+        this.active = active;
     }
 
     public int getX(){
