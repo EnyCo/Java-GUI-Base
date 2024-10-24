@@ -6,3 +6,8 @@ STYLE:
 
 TESTING:
     - confirm Button Exit Yes and Exit No work for each new screen
+
+TODO:
+    - textboxes
+    - different components
+    - animation

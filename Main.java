@@ -125,8 +125,8 @@ public class Main extends JFrame
         try {
             for (int i = 0; i < SCREENS.size(); i++) {
                 for (int j = 0; j < SCREENS.get(i).getButtons().size(); j++) {
-                    if (new File("img\\" + SCREENS.get(i).getName() + "\\" + SCREENS.get(i).getButtons().get(j).getText() + ".png").exists()) {
-                        BufferedImage img = ImageIO.read(new File("img\\" + SCREENS.get(i).getName() + "\\" + SCREENS.get(i).getButtons().get(j).getText() + ".png"));
+                    if (new File("img\\" + SCREENS.get(i).getButtons().get(j).getText() + ".png").exists()) {
+                        BufferedImage img = ImageIO.read(new File("img\\" + SCREENS.get(i).getButtons().get(j).getText() + ".png"));
                         
                         Image newResizedImage = img.getScaledInstance(SCREENS.get(i).getButtons().get(j).getWidth(), 
                                                                       SCREENS.get(i).getButtons().get(j).getHeight(), 
