@@ -1,10 +1,8 @@
-public class ButtonExitNo extends GUIComponent {
-    public ButtonExitNo (boolean active, int x, int y, int width, int height, String text) {
-        super(active, x, y, width, height, text);
-    }
+import java.awt.image.BufferedImage;
 
-    public ButtonExitNo (boolean active, int x, int y, int width, int height) {
-        super(active, x, y, width, height);
+public class ButtonExitNo extends GUIComponent {
+    public ButtonExitNo (boolean active, int x, int y, int width, int height, BufferedImage img, String text) {
+        super(active, x, y, width, height, img, text);
     }
 
     public void onClick() { //WILL CRASH IF SCREEN DOES NOT HAVE THESE TWO BUTTONS

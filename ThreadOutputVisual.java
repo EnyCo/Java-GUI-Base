@@ -34,23 +34,38 @@ public class ThreadOutputVisual implements Runnable {
                 g2d.drawString(x + ", " + y, x, y);
                 for (int i = 0; i < Main.getActiveScreen().getButtons().size(); i++) {
                     if (Main.getActiveScreen().getButtons().get(i).getActive()){
-                        g2d.fillRect(Main.getActiveScreen().getButtons().get(i).getX(), Main.getActiveScreen().getButtons().get(i).getY(), 
-                        Main.getActiveScreen().getButtons().get(i).getWidth(), Main.getActiveScreen().getButtons().get(i).getHeight());
-                        
-                        g2d.setColor( Color.BLACK );
-                        if (!Main.getActiveScreen().getButtons().get(i).getText().equals("")) { // potentially fails due to getActiveScreen() changing in the fraction of a second between checks.
-                            Rectangle text = g2d.getFont().createGlyphVector(g2d.getFontRenderContext(), 
-                                Main.getActiveScreen().getButtons().get(i).getText()).getPixelBounds(null, 
-                                    Main.getActiveScreen().getButtons().get(i).getX(), 
-                                    Main.getActiveScreen().getButtons().get(i).getY());
-                            g2d.drawString(Main.getActiveScreen().getButtons().get(i).getText(), 
-                                Main.getActiveScreen().getButtons().get(i).getX() + Main.getActiveScreen().getButtons().get(i).getWidth()/2 - (int)(text.getWidth()/2),
-                                Main.getActiveScreen().getButtons().get(i).getY() + Main.getActiveScreen().getButtons().get(i).getHeight()/2 + (int)(text.getHeight()/2)); 
+                        if (Main.getActiveScreen().getButtons().get(i).getImg() == null) {
+                            g2d.fillRect(Main.getActiveScreen().getButtons().get(i).getX(), Main.getActiveScreen().getButtons().get(i).getY(), 
+                            Main.getActiveScreen().getButtons().get(i).getWidth(), Main.getActiveScreen().getButtons().get(i).getHeight());
+                            
+                            g2d.setColor( Color.BLACK );
+                            if (!Main.getActiveScreen().getButtons().get(i).getText().equals("")) { // potentially fails due to getActiveScreen() changing in the fraction of a second between checks.
+                                Rectangle text = g2d.getFont().createGlyphVector(g2d.getFontRenderContext(), 
+                                    Main.getActiveScreen().getButtons().get(i).getText()).getPixelBounds(null, 
+                                        Main.getActiveScreen().getButtons().get(i).getX(), 
+                                        Main.getActiveScreen().getButtons().get(i).getY());
+                                g2d.drawString(Main.getActiveScreen().getButtons().get(i).getText(), 
+                                    Main.getActiveScreen().getButtons().get(i).getX() + Main.getActiveScreen().getButtons().get(i).getWidth()/2 - (int)(text.getWidth()/2),
+                                    Main.getActiveScreen().getButtons().get(i).getY() + Main.getActiveScreen().getButtons().get(i).getHeight()/2 + (int)(text.getHeight()/2)); 
+                                
+                            }
+
+                            //g2d.drawString(Main.t, 100, 100);
+                            g2d.setColor( Color.WHITE );
+                        } else {
+                            if (!Main.getActiveScreen().getButtons().get(i).isHover(x, y)) {
+                                g2d.drawImage(Main.getActiveScreen().getButtons().get(i).getImg(), 
+                                    Main.getActiveScreen().getButtons().get(i).getX(),
+                                    Main.getActiveScreen().getButtons().get(i).getY(),
+                                    null);
+                            } else {
+                                g2d.drawImage(Main.getActiveScreen().getButtons().get(i).getImg(), 
+                                    Main.getActiveScreen().getButtons().get(i).getX(),
+                                    Main.getActiveScreen().getButtons().get(i).getY(),
+                                    null);
+                            }
                             
                         }
-
-                        //g2d.drawString(Main.t, 100, 100);
-                        g2d.setColor( Color.WHITE );
                     }
                 }
                 

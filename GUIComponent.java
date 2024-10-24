@@ -1,24 +1,20 @@
+import java.awt.image.*;
+
 public abstract class GUIComponent {
     private boolean active = false;
     private int x, y;
     private int width, height;
+    private BufferedImage img = null;
     private String text = "";
 
-    public GUIComponent (boolean active, int x, int y, int width, int height, String text) {
+    public GUIComponent (boolean active, int x, int y, int width, int height, BufferedImage img, String text) {
         this.active = active;
         this.x = x;
         this.y = y;
         this.width = width;
         this.height = height;
+        this.img = img;
         this.text = text;
-    }
-
-    public GUIComponent (boolean active, int x, int y, int width, int height) {
-        this.active = active;
-        this.x = x;
-        this.y = y;
-        this.width = width;
-        this.height = height;
     }
 
     public boolean getActive(){
@@ -54,6 +50,13 @@ public abstract class GUIComponent {
     }
     public void setHeight(int height){
         this.height = height;
+    }
+
+    public BufferedImage getImg(){
+        return img;
+    }
+    public void setImg(BufferedImage img){
+        this.img = img;
     }
 
     public String getText(){

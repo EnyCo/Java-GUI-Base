@@ -1,7 +1,9 @@
 import java.io.*;
 import java.awt.*;
 import java.awt.datatransfer.*;
+import java.awt.image.*;
 import java.util.*;
+import javax.imageio.*;
 import javax.swing.*;
 
 public class Main extends JFrame
@@ -9,7 +11,7 @@ public class Main extends JFrame
     /*
      * is the object that is read from and is printed to
      */
-    private static Canvas canvas;
+    private static Canvas canvas = new Canvas();
     public static Canvas getCanvas() {
         return canvas;
     }
@@ -75,13 +77,13 @@ public class Main extends JFrame
      * should be list of buttons for each screen (may be in a screen object)
      */
     static final ArrayList<Screen> SCREENS = new ArrayList<Screen>(Arrays.asList(new Screen("Start Screen", new ArrayList<GUIComponent>(Arrays.asList(
-                                                                                    new ButtonExitYes(false, WIDTH/4 - 50, HEIGHT/2 - 10, 100, 20, "Yes"),
-                                                                                    new ButtonExitNo(false, WIDTH*3/4 - 50, HEIGHT/2 - 10, 100, 20, "No!"),
-                                                                                    new ButtonTestStart(true, WIDTH/2 - 50, HEIGHT/2 - 10, 100, 20, "Start!")))),
+                                                                                    new ButtonExitYes(false, WIDTH*2/5 - 50, HEIGHT/2 - 10, 100, 20, null,  "Yes"),
+                                                                                    new ButtonExitNo(false, WIDTH*3/5 - 50, HEIGHT/2 - 10, 100, 20, null, "No"),
+                                                                                    new ButtonTestStart(true, WIDTH/2 - 50, HEIGHT/2 - 10, 100, 20, null, "Start")))),
                                                                                  new Screen("End Screen", new ArrayList<GUIComponent>(Arrays.asList(
-                                                                                    new ButtonExitYes(false, WIDTH/4 - 50, HEIGHT/2 - 10, 100, 20, "Yes"),
-                                                                                    new ButtonExitNo(false, WIDTH*3/4 - 50, HEIGHT/2 - 10, 100, 20, "No!"),
-                                                                                    new ButtonTestEnd(true, WIDTH/2 - 50, HEIGHT/2 - 10, 100, 20, "End!"))))));// set all future screens to false
+                                                                                    new ButtonExitYes(false, WIDTH*2/5 - 50, HEIGHT/2 - 10, 100, 20, null, "Yes"),
+                                                                                    new ButtonExitNo(false, WIDTH*3/5 - 50, HEIGHT/2 - 10, 100, 20, null, "No"),
+                                                                                    new ButtonTestEnd(true, WIDTH/2 - 50, HEIGHT/2 - 10, 100, 20, null, "End"))))));// set all future screens to false
                                                                    
     
     private static Screen activeScreen = SCREENS.get(0);// makes code more efficient
@@ -95,25 +97,62 @@ public class Main extends JFrame
         return activeScreen;
     }
 
-    public Main() 
-    {
+
+    private void setCanvas() {
         setIgnoreRepaint( true );
         setDefaultCloseOperation( JFrame.EXIT_ON_CLOSE );
-        canvas = new Canvas();
         canvas.setIgnoreRepaint( true );
         canvas.setSize( WIDTH, HEIGHT );
         add( canvas );
         pack();
+    }
 
+    private void setKeyListener() {
         // for keyboard using
         addKeyListener( keyboard );
         canvas.addKeyListener( keyboard );
-        
+    }
+
+    private void setMouseListener() {
         // for mouse using
         addMouseListener( mouse );
         addMouseMotionListener( mouse );
         canvas.addMouseListener( mouse );
         canvas.addMouseMotionListener( mouse );
+    }
+
+    private void setImages() {
+        try {
+            for (int i = 0; i < SCREENS.size(); i++) {
+                for (int j = 0; j < SCREENS.get(i).getButtons().size(); j++) {
+                    if (new File("img\\" + SCREENS.get(i).getName() + "\\" + SCREENS.get(i).getButtons().get(j).getText() + ".png").exists()) {
+                        BufferedImage img = ImageIO.read(new File("img\\" + SCREENS.get(i).getName() + "\\" + SCREENS.get(i).getButtons().get(j).getText() + ".png"));
+                        
+                        Image newResizedImage = img.getScaledInstance(SCREENS.get(i).getButtons().get(j).getWidth(), 
+                                                                      SCREENS.get(i).getButtons().get(j).getHeight(), 
+                                                                      Image.SCALE_SMOOTH);
+                        BufferedImage newImg = new BufferedImage(newResizedImage.getWidth(null), newResizedImage.getHeight(null), BufferedImage.TYPE_INT_ARGB);
+                
+                        Graphics2D graphics2D = newImg.createGraphics();
+                        graphics2D.drawImage(newResizedImage, 0, 0, null);
+                        graphics2D.dispose();
+
+                        SCREENS.get(i).getButtons().get(j).setImg(newImg);
+
+                    }
+                }
+            }
+        } catch (IOException e) {
+			e.printStackTrace();
+		} 
+    }
+
+    public Main() 
+    {
+        setCanvas();
+        setKeyListener();
+        setMouseListener();
+        setImages();
     }
     
 
@@ -123,7 +162,6 @@ public class Main extends JFrame
 
     public static void main(String[] args) throws UnsupportedFlavorException,InterruptedException, IOException
     {
-        System.out.println(activeScreen.getName() + " is the active screen now!");
         Main app = new Main();
         app.setTitle( "Main" );
         app.setVisible( true );
@@ -140,10 +178,7 @@ public class Main extends JFrame
 
         Thread inputProcess = new Thread(new ThreadInputProcess());
     	inputProcess.start();
-
-
-        //all major screen button and variable data here.
-
+        //all major screen button and variable data here. ?
 
     	while (!gameOver) {// this keep everything running
 			Thread.sleep(10);
