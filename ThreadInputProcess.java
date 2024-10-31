@@ -14,6 +14,8 @@ public class ThreadInputProcess implements Runnable {
                 for (int i = 0; i < Main.getActiveScreens().get(Main.getActiveScreens().size() - 1).getButtons().size(); i++) {
                     if (Main.getActiveScreens().get(Main.getActiveScreens().size() - 1).getButtons().get(i).getActive()) {
                         if (Main.getActiveScreens().get(Main.getActiveScreens().size() - 1).getButtons().get(i).isHover(x, y)){
+                            Main.setClang(true);
+                            
                             Main.getActiveScreens().get(Main.getActiveScreens().size() - 1).getButtons().get(i).onClick();
                         }
                     }
@@ -31,14 +33,26 @@ public class ThreadInputProcess implements Runnable {
                 }
             }            
             
-            if (Main.getKeyboard().isKeyPressedOnce( KeyEvent.VK_ESCAPE )) {if (Main.getActiveScreens().size() == 1) {//if one page opens exit dialogue
+            if (Main.getKeyboard().isKeyPressedOnce( KeyEvent.VK_ENTER )) {
+                if (Main.getActiveTextBox() != null) {
+                    Main.getActiveTextBox().onEnter();
+                }
+            }
+            if (Main.getKeyboard().isKeyPressedOnce( KeyEvent.VK_ESCAPE )) {
+                if (Main.getActiveTextBox() != null) {
+                    Main.setActiveTextBox(null);
+                }
+
+                if (Main.getActiveScreens().size() == 1) {//if one page opens exit dialogue
                     Main.getActiveScreens().get(Main.getActiveScreens().size() - 1).getSubScreens().get(0).setActive(true);
                 } else {
                     Main.getActiveScreens().remove(Main.getActiveScreens().size() - 1);
                 }
             }
+
+
             try {
-                Thread.sleep(10);
+                Thread.sleep(Main.getThreadSleep());
             } catch (InterruptedException e) {
                 System.out.println("PROCESS CLOCK NOT WORKING");
                 e.printStackTrace();

@@ -15,8 +15,5 @@ TESTING:
     - confirm Button Exit Yes and Exit No work for each new screen
 
 TODO:
-    - different components
-    - onEnter for text boxes
-    - animation
-    - audio tests
+    - put new audios into struct
     - create default button sizes to pull from (top of MAIN)

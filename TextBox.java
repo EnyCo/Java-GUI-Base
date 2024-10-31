@@ -46,4 +46,9 @@ abstract public class TextBox extends GUIcomponent {
     public void onClick() {
         Main.setActiveTextBox(this);
     }
+
+    public String onEnter() {
+        Main.setActiveTextBox(null);
+        return getText();
+    }
 }

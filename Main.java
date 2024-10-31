@@ -9,6 +9,14 @@ import javax.swing.*;
 public class Main extends JFrame
 {
     /*
+     * 
+     */
+    private static int threadSleep = 10;
+    public static int getThreadSleep() {
+        return threadSleep;
+    }
+
+    /*
      * is the object that is read from and is printed to
      */
     private static Canvas canvas = new Canvas();
@@ -80,6 +88,15 @@ public class Main extends JFrame
         return activeTextBox;
     }
 
+    
+    private static boolean playClang = false; //store all audios in structure so not to flood this area.
+    public static void setClang(boolean p) {
+        playClang = p;
+    }
+    public static boolean getClang() {
+        return playClang;
+    }
+
 
     private void setCanvas() {
         setIgnoreRepaint( true );
@@ -131,41 +148,42 @@ public class Main extends JFrame
         getActiveScreens().add(Screens.get("Start Screen"));
     }
 
-    private void setImages() {
+    private void setImages(Screen screen) {
         try {
-            for (Map.Entry<String,Screen> mapElement : Screens.entrySet()) {
-                for (int i = 0; i < mapElement.getValue().getImgs().size(); i++) {                        
-                    if (new File("img\\" + mapElement.getValue().getImgs().get(i).getName() + ".png").exists()) {
-                        BufferedImage img = ImageIO.read(new File("img\\" + mapElement.getValue().getImgs().get(i).getName() + ".png"));
+            for (int i = 0; i < screen.getImgs().size(); i++) {                        
+                if (new File("img\\" + screen.getImgs().get(i).getName() + ".png").exists()) {
+                    BufferedImage img = ImageIO.read(new File("img\\" + screen.getImgs().get(i).getName() + ".png"));
                                         
-                        Image newResizedImage = img.getScaledInstance(mapElement.getValue().getImgs().get(i).getWidth(), 
-                        mapElement.getValue().getImgs().get(i).getHeight(), 
+                    Image newResizedImage = img.getScaledInstance(screen.getImgs().get(i).getWidth(), 
+                    screen.getImgs().get(i).getHeight(), 
                                                                                     Image.SCALE_SMOOTH);
-                        BufferedImage newImg = new BufferedImage(newResizedImage.getWidth(null), newResizedImage.getHeight(null), BufferedImage.TYPE_INT_ARGB);
+                    BufferedImage newImg = new BufferedImage(newResizedImage.getWidth(null), newResizedImage.getHeight(null), BufferedImage.TYPE_INT_ARGB);
                         
-                        Graphics2D graphics2D = newImg.createGraphics();
-                        graphics2D.drawImage(newResizedImage, 0, 0, null);
-                        graphics2D.dispose();
+                    Graphics2D graphics2D = newImg.createGraphics();
+                    graphics2D.drawImage(newResizedImage, 0, 0, null);
+                    graphics2D.dispose();
 
-                        mapElement.getValue().getImgs().get(i).setImg(newImg);
-                    }
+                    screen.getImgs().get(i).setImg(newImg);
                 }
-                for (int i = 0; i < mapElement.getValue().getButtons().size(); i++) {                        
-                    if (new File("img\\" + mapElement.getValue().getButtons().get(i).getName() + ".png").exists()) {
-                        BufferedImage img = ImageIO.read(new File("img\\" + mapElement.getValue().getButtons().get(i).getName() + ".png"));
+            }
+            for (int i = 0; i < screen.getButtons().size(); i++) {                        
+                if (new File("img\\" + screen.getButtons().get(i).getName() + ".png").exists()) {
+                    BufferedImage img = ImageIO.read(new File("img\\" + screen.getButtons().get(i).getName() + ".png"));
                                         
-                        Image newResizedImage = img.getScaledInstance(mapElement.getValue().getButtons().get(i).getWidth(), 
-                        mapElement.getValue().getButtons().get(i).getHeight(), 
+                    Image newResizedImage = img.getScaledInstance(screen.getButtons().get(i).getWidth(), 
+                    screen.getButtons().get(i).getHeight(), 
                                                                                     Image.SCALE_SMOOTH);
-                        BufferedImage newImg = new BufferedImage(newResizedImage.getWidth(null), newResizedImage.getHeight(null), BufferedImage.TYPE_INT_ARGB);
+                    BufferedImage newImg = new BufferedImage(newResizedImage.getWidth(null), newResizedImage.getHeight(null), BufferedImage.TYPE_INT_ARGB);
                         
-                        Graphics2D graphics2D = newImg.createGraphics();
-                        graphics2D.drawImage(newResizedImage, 0, 0, null);
-                        graphics2D.dispose();
+                    Graphics2D graphics2D = newImg.createGraphics();
+                    graphics2D.drawImage(newResizedImage, 0, 0, null);
+                    graphics2D.dispose();
 
-                        mapElement.getValue().getButtons().get(i).setImg(newImg);
-                    }
+                    screen.getButtons().get(i).setImg(newImg);
                 }
+            }
+            for (int i = 0; i < screen.getSubScreens().size(); i++) {                        
+                setImages(screen.getSubScreens().get(i));
             }
         } catch (IOException e) {
 			e.printStackTrace();
@@ -179,7 +197,9 @@ public class Main extends JFrame
         setMouseListener();
 
         setScreens();
-        setImages();
+        for (Map.Entry<String,Screen> mapElement : Screens.entrySet()) {
+            setImages(mapElement.getValue());
+        }
     }
     
     public static void main(String[] args) throws UnsupportedFlavorException,InterruptedException, IOException

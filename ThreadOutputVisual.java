@@ -37,7 +37,7 @@ public class ThreadOutputVisual implements Runnable {
                     buffer.show();
                 
                 try {
-					Thread.sleep(13);
+					Thread.sleep(Main.getThreadSleep());
 				} catch (InterruptedException e) {
 					System.out.println("OUTPUT CLOCK NOT WORKING");
 					e.printStackTrace();

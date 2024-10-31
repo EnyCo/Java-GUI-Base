@@ -9,11 +9,11 @@ public class Clock implements Runnable
     public void run(){
         while (true){
             try{
-                Thread.sleep(10);
+                Thread.sleep(Main.getThreadSleep());
             } catch(Exception e){
                 System.out.println("Oops time isn't working");
             }
-            counter += 10;
+            counter += Main.getThreadSleep();
 
             if (counter % 500 == 0 && Main.getActiveTextBox() != null) {//textbox counter stuff
                 Main.getActiveTextBox().setSeeBar(!Main.getActiveTextBox().getSeeBar());
