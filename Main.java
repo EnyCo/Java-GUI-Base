@@ -60,31 +60,16 @@ public class Main extends JFrame
     public static int getWidthScreen() {
         return WIDTH;
     }
-    
-    /*
-     * value that refers to the pixel distance between:
-     *      the left edge of screen 
-     *      the right edge of the visual canvas
-     * so that the visual canvas is centered
-     */
-	private final static int SHIFT = WIDTH/2 - HEIGHT/2;
-    public static int getShift() {
-        return SHIFT;
-    }
-
 
      /*
      * should be list of buttons for each screen (may be in a screen object)
      */
 
     private static HashMap<String, Screen> Screens = new HashMap<String, Screen>();
-    private static Screen activeScreen;
+    private static ArrayList<Screen> activeScreens = new ArrayList<Screen>();
     
-    public static void setActiveScreen(Screen aS){
-        activeScreen = aS;
-    }
-    public static Screen getActiveScreen(){
-        return activeScreen;
+    public static ArrayList<Screen> getActiveScreens(){
+        return activeScreens;
     }
 
     private static TextBox activeTextBox;
@@ -120,23 +105,51 @@ public class Main extends JFrame
     }
 
     private void setScreens() {
-        Screens.put("Start Screen", new Screen(0, 0, WIDTH, HEIGHT, "Start Screen",
-                new ArrayList<Button>(Arrays.asList(// button list
-                    new ButtonExitYes(false, WIDTH/4-50, HEIGHT/2-25, 100, 50, null, "yes"),
-                    new ButtonExitNo(false, WIDTH*3/4-50, HEIGHT/2-25, 100, 50, null, "no")
-                    )),
-                new ArrayList<TextBox>(Arrays.asList(// textbox list
-                    new TextBox(true, WIDTH/2-50, HEIGHT/2-10, 100, 20, "")
-                    ))
-                )  
+        Screen exitDialogue = new Screen(false, WIDTH/3, HEIGHT/3, WIDTH/3, HEIGHT/3, Color.LIGHT_GRAY, "Exit Screen!",
+        new ArrayList<Img>(Arrays.asList()),
+        new ArrayList<Button>(Arrays.asList(// button list
+            new ButtonExitYes(true, WIDTH*4/10-50, HEIGHT/2-25, 100, 50, null, "yes"),
+            new ButtonExitNo(true, WIDTH*6/10-50, HEIGHT/2-25, 100, 50, null, "no")
+            )),
+        new ArrayList<TextBox>(Arrays.asList()),// textbox list
+        new ArrayList<Screen>(Arrays.asList())// subscreen list
         );
-        //throw new UnsupportedOperationException("Unimplemented method 'setScreens'");
-        activeScreen = Screens.get("Start Screen");
+
+
+        Screens.put("Start Screen", new Screen(true, 0, 0, WIDTH, HEIGHT, Color.GRAY, "Start Screen",
+                new ArrayList<Img>(Arrays.asList(
+                    new Img(true, 0, 0, WIDTH, 100, null, "banner")
+                )),
+                new ArrayList<Button>(Arrays.asList(
+                    )),
+                new ArrayList<TextBox>(Arrays.asList(
+                    new TextBoxTest(true, WIDTH/2-50, HEIGHT/2-10, 100, 20, ""))),
+                new ArrayList<Screen>(Arrays.asList(
+                    exitDialogue))
+                )
+        );
+        getActiveScreens().add(Screens.get("Start Screen"));
     }
 
     private void setImages() {
         try {
             for (Map.Entry<String,Screen> mapElement : Screens.entrySet()) {
+                for (int i = 0; i < mapElement.getValue().getImgs().size(); i++) {                        
+                    if (new File("img\\" + mapElement.getValue().getImgs().get(i).getName() + ".png").exists()) {
+                        BufferedImage img = ImageIO.read(new File("img\\" + mapElement.getValue().getImgs().get(i).getName() + ".png"));
+                                        
+                        Image newResizedImage = img.getScaledInstance(mapElement.getValue().getImgs().get(i).getWidth(), 
+                        mapElement.getValue().getImgs().get(i).getHeight(), 
+                                                                                    Image.SCALE_SMOOTH);
+                        BufferedImage newImg = new BufferedImage(newResizedImage.getWidth(null), newResizedImage.getHeight(null), BufferedImage.TYPE_INT_ARGB);
+                        
+                        Graphics2D graphics2D = newImg.createGraphics();
+                        graphics2D.drawImage(newResizedImage, 0, 0, null);
+                        graphics2D.dispose();
+
+                        mapElement.getValue().getImgs().get(i).setImg(newImg);
+                    }
+                }
                 for (int i = 0; i < mapElement.getValue().getButtons().size(); i++) {                        
                     if (new File("img\\" + mapElement.getValue().getButtons().get(i).getName() + ".png").exists()) {
                         BufferedImage img = ImageIO.read(new File("img\\" + mapElement.getValue().getButtons().get(i).getName() + ".png"));

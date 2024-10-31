@@ -1,11 +1,11 @@
-abstract public class TextBox extends GUIcomponent {
+public class TextBoxTest extends TextBox {
     private boolean active;
     private int x, y;
     private int width, height;
     private String text = "";
     private boolean seeBar = true;
-    public TextBox (boolean active, int x, int y, int width, int height, String text) {
-        super(active, x, y, width, height);
+    public TextBoxTest (boolean active, int x, int y, int width, int height, String text) {
+        super(active, x, y, width, height, text);
         this.active = active;
         this.x = x;
         this.y = y;

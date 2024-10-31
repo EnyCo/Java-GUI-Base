@@ -7,8 +7,7 @@ public class ButtonExitNo extends Button {
 
     public void onClick() { //WILL CRASH IF SCREEN DOES NOT HAVE THESE TWO BUTTONS
         try {
-            Main.getActiveScreen().getButtons().get(0).setActive(false);// sets yes button to off
-            Main.getActiveScreen().getButtons().get(1).setActive(false);// sets no button to off
+            Main.getActiveScreens().remove(Main.getActiveScreens().size() - 1);
         } catch (Exception e) {
             System.out.println("missing default buttons");
         }

@@ -15,8 +15,8 @@ TESTING:
     - confirm Button Exit Yes and Exit No work for each new screen
 
 TODO:
-    - add image GUI comp
     - different components
+    - onEnter for text boxes
     - animation
     - audio tests
     - create default button sizes to pull from (top of MAIN)
