@@ -76,25 +76,23 @@ public class Main extends JFrame
      /*
      * should be list of buttons for each screen (may be in a screen object)
      */
-    static final ArrayList<Screen> SCREENS = new ArrayList<Screen>(Arrays.asList(new Screen("Start Screen", new ArrayList<GUIComponent>(Arrays.asList(
-                                                                                    new ButtonExitYes(false, WIDTH*2/5 - 50, HEIGHT/2 - 10, 100, 20, null,  "Yes"),
-                                                                                    new ButtonExitNo(false, WIDTH*3/5 - 50, HEIGHT/2 - 10, 100, 20, null, "No"),
-                                                                                    new ButtonTestStart(true, WIDTH/2 - 50, HEIGHT/2 - 10, 100, 20, null, "Start")))),
-                                                                                 new Screen("End Screen", new ArrayList<GUIComponent>(Arrays.asList(
-                                                                                    new ButtonExitYes(false, WIDTH*2/5 - 50, HEIGHT/2 - 10, 100, 20, null, "Yes"),
-                                                                                    new ButtonExitNo(false, WIDTH*3/5 - 50, HEIGHT/2 - 10, 100, 20, null, "No"),
-                                                                                    new ButtonTestEnd(true, WIDTH/2 - 50, HEIGHT/2 - 10, 100, 20, null, "End"))))));// set all future screens to false
-                                                                   
-    
-    private static Screen activeScreen = SCREENS.get(0);// makes code more efficient
 
+    private static HashMap<String, Screen> Screens = new HashMap<String, Screen>();
+    private static Screen activeScreen;
+    
     public static void setActiveScreen(Screen aS){
-        activeScreen.getButtons().get(0).setActive(false); //ensure reset if screen changes
-        activeScreen.getButtons().get(1).setActive(false); //ensure reset if screen changes
         activeScreen = aS;
     }
     public static Screen getActiveScreen(){
         return activeScreen;
+    }
+
+    private static TextBox activeTextBox;
+    public static void setActiveTextBox(TextBox tb){
+        activeTextBox = tb;
+    }
+    public static TextBox getActiveTextBox(){
+        return activeTextBox;
     }
 
 
@@ -121,24 +119,38 @@ public class Main extends JFrame
         canvas.addMouseMotionListener( mouse );
     }
 
+    private void setScreens() {
+        Screens.put("Start Screen", new Screen(0, 0, WIDTH, HEIGHT, "Start Screen",
+                new ArrayList<Button>(Arrays.asList(// button list
+                    new ButtonExitYes(false, WIDTH/4-50, HEIGHT/2-25, 100, 50, null, "yes"),
+                    new ButtonExitNo(false, WIDTH*3/4-50, HEIGHT/2-25, 100, 50, null, "no")
+                    )),
+                new ArrayList<TextBox>(Arrays.asList(// textbox list
+                    new TextBox(true, WIDTH/2-50, HEIGHT/2-10, 100, 20, "")
+                    ))
+                )  
+        );
+        //throw new UnsupportedOperationException("Unimplemented method 'setScreens'");
+        activeScreen = Screens.get("Start Screen");
+    }
+
     private void setImages() {
         try {
-            for (int i = 0; i < SCREENS.size(); i++) {
-                for (int j = 0; j < SCREENS.get(i).getButtons().size(); j++) {
-                    if (new File("img\\" + SCREENS.get(i).getButtons().get(j).getText() + ".png").exists()) {
-                        BufferedImage img = ImageIO.read(new File("img\\" + SCREENS.get(i).getButtons().get(j).getText() + ".png"));
-                        
-                        Image newResizedImage = img.getScaledInstance(SCREENS.get(i).getButtons().get(j).getWidth(), 
-                                                                      SCREENS.get(i).getButtons().get(j).getHeight(), 
-                                                                      Image.SCALE_SMOOTH);
+            for (Map.Entry<String,Screen> mapElement : Screens.entrySet()) {
+                for (int i = 0; i < mapElement.getValue().getButtons().size(); i++) {                        
+                    if (new File("img\\" + mapElement.getValue().getButtons().get(i).getName() + ".png").exists()) {
+                        BufferedImage img = ImageIO.read(new File("img\\" + mapElement.getValue().getButtons().get(i).getName() + ".png"));
+                                        
+                        Image newResizedImage = img.getScaledInstance(mapElement.getValue().getButtons().get(i).getWidth(), 
+                        mapElement.getValue().getButtons().get(i).getHeight(), 
+                                                                                    Image.SCALE_SMOOTH);
                         BufferedImage newImg = new BufferedImage(newResizedImage.getWidth(null), newResizedImage.getHeight(null), BufferedImage.TYPE_INT_ARGB);
-                
+                        
                         Graphics2D graphics2D = newImg.createGraphics();
                         graphics2D.drawImage(newResizedImage, 0, 0, null);
                         graphics2D.dispose();
 
-                        SCREENS.get(i).getButtons().get(j).setImg(newImg);
-
+                        mapElement.getValue().getButtons().get(i).setImg(newImg);
                     }
                 }
             }
@@ -152,14 +164,11 @@ public class Main extends JFrame
         setCanvas();
         setKeyListener();
         setMouseListener();
+
+        setScreens();
         setImages();
     }
     
-
-
-
-    //static String t = "";
-
     public static void main(String[] args) throws UnsupportedFlavorException,InterruptedException, IOException
     {
         Main app = new Main();
@@ -170,6 +179,9 @@ public class Main extends JFrame
     }
     
     public void run() throws UnsupportedFlavorException, InterruptedException {
+        Thread clock = new Thread(new Clock());
+        clock.start();
+
     	Thread outputVisual = new Thread(new ThreadOutputVisual());
     	outputVisual.start();
 

@@ -1,19 +1,61 @@
 import java.util.*;
 
 public class Screen {
-    private String name;
-    private ArrayList<GUIComponent> entities = new ArrayList<GUIComponent>();
+    private int x = 0;
+    private int y = 0;
+    private int width = 0;
+    private int height = 0;
 
-    public Screen(String name, ArrayList<GUIComponent> e) {
+    private String name;
+    private ArrayList<Button> buttons;
+    private ArrayList<TextBox> textboxes;
+
+    public Screen(int x, int y, int width, int height, String name, ArrayList<Button> buttons, ArrayList<TextBox> textboxes) {
+        this.x = x;
+        this.y = y;
+        this.width = width;
+        this.height = height;
         this.name = name;
-        entities = e;
+        this.buttons = buttons;
+        this.textboxes = textboxes;
+    }
+    
+    public int getX(){
+        return x;
+    }
+    public void setX(int x){
+        this.x = x;
+    }
+
+    public int getY(){
+        return y;
+    }
+    public void setY(int y){
+        this.y = y;
+    }
+
+    public int getWidth(){
+        return width;
+    }
+    public void setWidth(int width){
+        this.width = width;
+    }
+
+    public int getHeight(){
+        return height;
+    }
+    public void setHeight(int height){
+        this.height = height;
     }
 
     public String getName() {
         return name;
     }
 
-    public ArrayList<GUIComponent> getButtons() {
-        return entities;
+    public ArrayList<Button> getButtons() {
+        return buttons;
+    }
+    public ArrayList<TextBox> getTextboxes() {
+        return textboxes;
     }
 }

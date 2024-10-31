@@ -21,17 +21,15 @@ public class InputKeyboard implements KeyListener{
 
     public void keyTyped(KeyEvent e){
         val = e.getKeyChar();
-        /*if (!Character.isISOControl(InputKeyboard.getVal())){
-            Main.t += val;
-        } 
-        else if (isKeyPressed(KeyEvent.VK_ENTER)) {
-
-        } 
-        else if (isKeyPressed(KeyEvent.VK_BACK_SPACE)) {
-                if (Main.t.length() > 0) {
-                    Main.t = Main.t.substring(0, Main.t.length() - 1);
-            }  
-        }*/
+        if (Main.getActiveTextBox() != null) {
+            if (!Character.isISOControl(InputKeyboard.getVal())){
+                Main.getActiveTextBox().append(val);
+            } else if (isKeyPressed(KeyEvent.VK_BACK_SPACE)) {
+                if (Main.getActiveTextBox().getText().length() > 0) {
+                    Main.getActiveTextBox().remend();
+                }  
+            }
+        }
     }
     
     public boolean isKeyPressed(int keyCode) {
