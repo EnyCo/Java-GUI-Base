@@ -1,3 +1,4 @@
+import java.awt.*;
 import java.awt.image.BufferedImage;
 
 public class Img extends GUIcomponent {
@@ -17,6 +18,12 @@ public class Img extends GUIcomponent {
         this.img = img;
         this.name = name;
         this.img = img;
+    }
+
+    public void drawGUIcomponent(Graphics2D g2d) {
+        if (active){
+            g2d.drawImage(img, x, y, null);
+        }
     }
 
     public BufferedImage getImg(){

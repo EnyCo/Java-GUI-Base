@@ -15,5 +15,6 @@ TESTING:
     - confirm Button Exit Yes and Exit No work for each new screen
 
 TODO:
+    - figure out why textbox doesn't update properly
     - put new audios into struct
     - create default button sizes to pull from (top of MAIN)

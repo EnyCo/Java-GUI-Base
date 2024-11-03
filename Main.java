@@ -140,7 +140,7 @@ public class Main extends JFrame
                 new ArrayList<Button>(Arrays.asList(
                     )),
                 new ArrayList<TextBox>(Arrays.asList(
-                    new TextBoxTest(true, WIDTH/2-50, HEIGHT/2-10, 100, 20, ""))),
+                    new TextBox(true, WIDTH/2-50, HEIGHT/2-10, 100, 20, ""))),
                 new ArrayList<Screen>(Arrays.asList(
                     exitDialogue))
                 )

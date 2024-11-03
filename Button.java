@@ -1,3 +1,4 @@
+import java.awt.*;
 import java.awt.image.BufferedImage;
 
 abstract public class Button extends GUIcomponent {
@@ -17,6 +18,22 @@ abstract public class Button extends GUIcomponent {
         this.img = img;
         this.name = name;
         this.img = img;
+    }
+
+    public void drawGUIcomponent(Graphics2D g2d) {
+        if (active){
+            if (img != null) {
+                g2d.drawImage(img, x, y, null);
+            } else {
+                g2d.setColor( Color.BLACK );
+                Rectangle text = g2d.getFont().createGlyphVector(g2d.getFontRenderContext(), 
+                    name).getPixelBounds(null, x, y);
+                g2d.drawString(name, 
+                    x + width/2 - (int)(text.getWidth()/2),
+                    y + height/2 + (int)(text.getHeight()/2)); 
+                g2d.drawRect(x, y, width, height);
+            }
+        }
     }
 
     public BufferedImage getImg(){

@@ -17,16 +17,38 @@ public class Screen extends GUIcomponent{
 
     public Screen(boolean active, int x, int y, int width, int height, Color background, String name, ArrayList<Img> imgs, ArrayList<Button> buttons, ArrayList<TextBox> textboxes, ArrayList<Screen> subScreens) {
         super(active, x, y, width, height);
-        this.background = background;
+        this.active = active;
         this.x = x;
         this.y = y;
         this.width = width;
         this.height = height;
+        this.background = background;
         this.name = name;
         this.imgs = imgs;
         this.buttons = buttons;
         this.textboxes = textboxes;
         this.subScreens = subScreens;
+    }
+
+    public void drawGUIcomponent(Graphics2D g2d) { // does not print out itself but prints subscreens fine
+        if (active) {
+            g2d.setColor(background);
+            g2d.fillRect(x, y, width,height);
+            
+            for (int i = 0; i < imgs.size(); i++) {
+                imgs.get(i).drawGUIcomponent(g2d);
+            }
+            for (int i = 0; i < buttons.size(); i++) {
+                buttons.get(i).drawGUIcomponent(g2d);
+            }
+            for (int i = 0; i < textboxes.size(); i++) {
+                textboxes.get(i).drawGUIcomponent(g2d);
+            }
+            
+            for (int i = 0; i < subScreens.size(); i++) {
+                subScreens.get(i).drawGUIcomponent(g2d);
+            }  
+        }
     }
 
     public void setActive(boolean active){
