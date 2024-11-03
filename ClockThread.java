@@ -1,4 +1,4 @@
-public class Clock implements Runnable
+public class ClockThread implements Runnable
 {
     private int counter = 0;
 

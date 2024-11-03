@@ -212,7 +212,7 @@ public class Main extends JFrame
     }
     
     public void run() throws UnsupportedFlavorException, InterruptedException {
-        Thread clock = new Thread(new Clock());
+        Thread clock = new Thread(new ClockThread());
         clock.start();
 
     	Thread outputVisual = new Thread(new ThreadOutputVisual());
