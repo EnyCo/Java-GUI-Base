@@ -1,5 +1,6 @@
 import java.awt.*;
 import java.awt.event.*;
+import java.util.*;
 
 public class ThreadInputProcess implements Runnable {
     @Override
@@ -11,12 +12,12 @@ public class ThreadInputProcess implements Runnable {
 
 
             if (Main.getMouse().isButtonClicked(1)) {
-                for (int i = 0; i < Main.getActiveScreens().get(Main.getActiveScreens().size() - 1).getButtons().size(); i++) {
-                    if (Main.getActiveScreens().get(Main.getActiveScreens().size() - 1).getButtons().get(i).getActive()) {
-                        if (Main.getActiveScreens().get(Main.getActiveScreens().size() - 1).getButtons().get(i).isHover(x, y)){
+                for (int i = 0; i < Main.getActiveScreen().getButtons().size(); i++) {
+                    if (Main.getActiveScreen().getButtons().get(i).getVisible()) {
+                        if (Main.getActiveScreen().getButtons().get(i).isHover(x, y)){
                             Main.setClang(true);
                             
-                            Main.getActiveScreens().get(Main.getActiveScreens().size() - 1).getButtons().get(i).onClick();
+                            Main.getActiveScreen().getButtons().get(i).onClick();
                         }
                     }
                 }
@@ -24,10 +25,10 @@ public class ThreadInputProcess implements Runnable {
                 if (Main.getActiveTextBox() != null && !Main.getActiveTextBox().isHover(x, y)) {
                     Main.setActiveTextBox(null);
                 }
-                for (int i = 0; i < Main.getActiveScreens().get(Main.getActiveScreens().size() - 1).getTextboxes().size(); i++) {
-                    if (Main.getActiveScreens().get(Main.getActiveScreens().size() - 1).getTextboxes().get(i).getActive()) {
-                        if (Main.getActiveScreens().get(Main.getActiveScreens().size() - 1).getTextboxes().get(i).isHover(x, y)){
-                            Main.getActiveScreens().get(Main.getActiveScreens().size() - 1).getTextboxes().get(i).onClick();
+                for (int i = 0; i < Main.getActiveScreen().getTextboxes().size(); i++) {
+                    if (Main.getActiveScreen().getTextboxes().get(i).getVisible()) {
+                        if (Main.getActiveScreen().getTextboxes().get(i).isHover(x, y)){
+                            Main.getActiveScreen().getTextboxes().get(i).onClick();
                         }
                     }
                 }
@@ -41,13 +42,18 @@ public class ThreadInputProcess implements Runnable {
             if (Main.getKeyboard().isKeyPressedOnce( KeyEvent.VK_ESCAPE )) {
                 if (Main.getActiveTextBox() != null) {
                     Main.setActiveTextBox(null);
-                }
+                } 
 
-                if (Main.getActiveScreens().size() == 1) {//if one page opens exit dialogue
-                    Main.getActiveScreens().get(Main.getActiveScreens().size() - 1).getSubScreens().get(0).setActive(true);
+
+                if (Main.getActiveScreen().getName().equals("Exit Screen")) {
+                    Main.popVisibleScreens();
                 } else {
-                    Main.getActiveScreens().remove(Main.getActiveScreens().size() - 1);
+                    Main.pushVisibleScreens(Main.getActiveScreen().getSubScreens().get(0));
                 }
+                for (int i = 0; i < Main.getVisibleScreens().size(); i++) {
+                    System.out.print(Main.getVisibleScreens().get(i).getName() + " ");
+                }
+                System.out.println();
             }
 
 

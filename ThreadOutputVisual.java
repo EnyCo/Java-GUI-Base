@@ -1,5 +1,7 @@
 import java.awt.*;
 import java.awt.image.*;
+import java.util.HashMap;
+import java.util.Map;
 
 public class ThreadOutputVisual implements Runnable {    
     @Override
@@ -26,8 +28,8 @@ public class ThreadOutputVisual implements Runnable {
                 //int x = (int)(p.getX());
                 //int y = (int)p.getY();
 
-                for (int i = 0; i < Main.getActiveScreens().size(); i++) {
-                    Main.getActiveScreens().get(i).drawGUIcomponent(g2d);
+                for (Map.Entry<String, Screen> entry : Main.getScreens().entrySet()) {
+                    entry.getValue().drawGUIcomponent(g2d);
                 }
                 
                 graphics = buffer.getDrawGraphics();

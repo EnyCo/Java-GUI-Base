@@ -2,15 +2,15 @@ import java.awt.*;
 import java.awt.image.BufferedImage;
 
 public class Img extends GUIcomponent {
-    private boolean active;
+    private boolean visible;
     private int x, y;
     private int width, height;
     private BufferedImage img = null;
     private String name = "";
     
-    public Img (boolean active, int x, int y, int width, int height, BufferedImage img, String name) {
-        super(active, x, y, width, height);
-        this.active = active;
+    public Img (boolean visible, int x, int y, int width, int height, BufferedImage img, String name) {
+        super(visible, x, y, width, height);
+        this.visible = visible;
         this.x = x;
         this.y = y;
         this.width = width;
@@ -21,7 +21,7 @@ public class Img extends GUIcomponent {
     }
 
     public void drawGUIcomponent(Graphics2D g2d) {
-        if (active){
+        if (visible){
             g2d.drawImage(img, x, y, null);
         }
     }

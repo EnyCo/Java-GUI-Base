@@ -8,9 +8,6 @@ import javax.swing.*;
 
 public class Main extends JFrame
 {
-    /*
-     * 
-     */
     private static int threadSleep = 10;
     public static int getThreadSleep() {
         return threadSleep;
@@ -74,10 +71,25 @@ public class Main extends JFrame
      */
 
     private static HashMap<String, Screen> Screens = new HashMap<String, Screen>();
-    private static ArrayList<Screen> activeScreens = new ArrayList<Screen>();
-    
-    public static ArrayList<Screen> getActiveScreens(){
-        return activeScreens;
+    public static HashMap<String, Screen> getScreens(){
+        return Screens;
+    }
+
+    private static Stack<Screen> visibleScreens = new Stack<Screen>();
+    public static Stack<Screen> getVisibleScreens(){
+        return visibleScreens;
+    }
+    public static void pushVisibleScreens(Screen screen){
+        visibleScreens.push(screen);
+        screen.setVisible(true);
+    }
+    public static void popVisibleScreens(){
+        Screen rem = visibleScreens.pop();
+        rem.setVisible(false);
+    }
+
+    public static Screen getActiveScreen(){
+        return visibleScreens.peek();
     }
 
     private static TextBox activeTextBox;
@@ -122,7 +134,7 @@ public class Main extends JFrame
     }
 
     private void setScreens() {
-        Screen exitDialogue = new Screen(false, WIDTH/3, HEIGHT/3, WIDTH/3, HEIGHT/3, Color.LIGHT_GRAY, "Exit Screen!",
+        Screen exitDialogue = new Screen(false, WIDTH/3, HEIGHT/3, WIDTH/3, HEIGHT/3, Color.LIGHT_GRAY, "Exit Screen",
         new ArrayList<Img>(Arrays.asList()),
         new ArrayList<Button>(Arrays.asList(// button list
             new ButtonExitYes(true, WIDTH*4/10-50, HEIGHT/2-25, 100, 50, null, "yes"),
@@ -145,49 +157,7 @@ public class Main extends JFrame
                     exitDialogue))
                 )
         );
-        getActiveScreens().add(Screens.get("Start Screen"));
-    }
-
-    private void setImages(Screen screen) {
-        try {
-            for (int i = 0; i < screen.getImgs().size(); i++) {                        
-                if (new File("img\\" + screen.getImgs().get(i).getName() + ".png").exists()) {
-                    BufferedImage img = ImageIO.read(new File("img\\" + screen.getImgs().get(i).getName() + ".png"));
-                                        
-                    Image newResizedImage = img.getScaledInstance(screen.getImgs().get(i).getWidth(), 
-                    screen.getImgs().get(i).getHeight(), 
-                                                                                    Image.SCALE_SMOOTH);
-                    BufferedImage newImg = new BufferedImage(newResizedImage.getWidth(null), newResizedImage.getHeight(null), BufferedImage.TYPE_INT_ARGB);
-                        
-                    Graphics2D graphics2D = newImg.createGraphics();
-                    graphics2D.drawImage(newResizedImage, 0, 0, null);
-                    graphics2D.dispose();
-
-                    screen.getImgs().get(i).setImg(newImg);
-                }
-            }
-            for (int i = 0; i < screen.getButtons().size(); i++) {                        
-                if (new File("img\\" + screen.getButtons().get(i).getName() + ".png").exists()) {
-                    BufferedImage img = ImageIO.read(new File("img\\" + screen.getButtons().get(i).getName() + ".png"));
-                                        
-                    Image newResizedImage = img.getScaledInstance(screen.getButtons().get(i).getWidth(), 
-                    screen.getButtons().get(i).getHeight(), 
-                                                                                    Image.SCALE_SMOOTH);
-                    BufferedImage newImg = new BufferedImage(newResizedImage.getWidth(null), newResizedImage.getHeight(null), BufferedImage.TYPE_INT_ARGB);
-                        
-                    Graphics2D graphics2D = newImg.createGraphics();
-                    graphics2D.drawImage(newResizedImage, 0, 0, null);
-                    graphics2D.dispose();
-
-                    screen.getButtons().get(i).setImg(newImg);
-                }
-            }
-            for (int i = 0; i < screen.getSubScreens().size(); i++) {                        
-                setImages(screen.getSubScreens().get(i));
-            }
-        } catch (IOException e) {
-			e.printStackTrace();
-		} 
+        visibleScreens.push(Screens.get("Start Screen"));
     }
 
     public Main() 
@@ -197,9 +167,6 @@ public class Main extends JFrame
         setMouseListener();
 
         setScreens();
-        for (Map.Entry<String,Screen> mapElement : Screens.entrySet()) {
-            setImages(mapElement.getValue());
-        }
     }
     
     public static void main(String[] args) throws UnsupportedFlavorException,InterruptedException, IOException

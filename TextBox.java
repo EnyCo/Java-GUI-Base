@@ -1,14 +1,14 @@
 import java.awt.*;
 
 public class TextBox extends GUIcomponent {
-    private boolean active;
+    private boolean visible;
     private int x, y;
     private int width, height;
     private String text = "";
     private boolean seeBar = true;
-    public TextBox (boolean active, int x, int y, int width, int height, String text) {
-        super(active, x, y, width, height);
-        this.active = active;
+    public TextBox (boolean visible, int x, int y, int width, int height, String text) {
+        super(visible, x, y, width, height);
+        this.visible = visible;
         this.x = x;
         this.y = y;
         this.width = width;
@@ -17,7 +17,7 @@ public class TextBox extends GUIcomponent {
     }
     
     public void drawGUIcomponent(Graphics2D g2d) {
-        if (active){
+        if (visible){
             g2d.setColor( Color.BLACK );
             g2d.setFont(new Font(g2d.getFont().getName(), Font.PLAIN, height - 4)); 
 
@@ -87,4 +87,5 @@ public class TextBox extends GUIcomponent {
         Main.setActiveTextBox(null);
         return getText();
     }
+
 }

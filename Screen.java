@@ -1,8 +1,12 @@
 import java.awt.*;
+import java.awt.image.*;
+import java.io.*;
 import java.util.*;
 
+import javax.imageio.ImageIO;
+
 public class Screen extends GUIcomponent{
-    private boolean active = false;
+    private boolean visible = false;
     private int x = 0;
     private int y = 0;
     private int width = 0;
@@ -15,9 +19,9 @@ public class Screen extends GUIcomponent{
     private ArrayList<TextBox> textboxes;
     private ArrayList<Screen> subScreens;
 
-    public Screen(boolean active, int x, int y, int width, int height, Color background, String name, ArrayList<Img> imgs, ArrayList<Button> buttons, ArrayList<TextBox> textboxes, ArrayList<Screen> subScreens) {
-        super(active, x, y, width, height);
-        this.active = active;
+    public Screen(boolean visible, int x, int y, int width, int height, Color background, String name, ArrayList<Img> imgs, ArrayList<Button> buttons, ArrayList<TextBox> textboxes, ArrayList<Screen> subScreens) {
+        super(visible, x, y, width, height);
+        this.visible = visible;
         this.x = x;
         this.y = y;
         this.width = width;
@@ -28,10 +32,55 @@ public class Screen extends GUIcomponent{
         this.buttons = buttons;
         this.textboxes = textboxes;
         this.subScreens = subScreens;
+
+        loadImages();
     }
 
+    private void loadImages() {
+        try {
+            for (int i = 0; i < imgs.size(); i++) {                        
+                if (new File("img\\" + imgs.get(i).getName() + ".png").exists()) {
+                    BufferedImage img = ImageIO.read(new File("img\\" + imgs.get(i).getName() + ".png"));
+                                        
+                    Image newResizedImage = img.getScaledInstance(imgs.get(i).getWidth(), 
+                    imgs.get(i).getHeight(), Image.SCALE_SMOOTH);
+
+                    BufferedImage newImg = new BufferedImage(newResizedImage.getWidth(null), newResizedImage.getHeight(null), BufferedImage.TYPE_INT_ARGB);
+                        
+                    Graphics2D graphics2D = newImg.createGraphics();
+                    graphics2D.drawImage(newResizedImage, 0, 0, null);
+                    graphics2D.dispose();
+
+                    imgs.get(i).setImg(newImg);
+                }
+            }
+            for (int i = 0; i < buttons.size(); i++) {                        
+                if (new File("img\\" + buttons.get(i).getName() + ".png").exists()) {
+                    BufferedImage img = ImageIO.read(new File("img\\" + buttons.get(i).getName() + ".png"));
+                                        
+                    Image newResizedImage = img.getScaledInstance(buttons.get(i).getWidth(), 
+                    buttons.get(i).getHeight(), Image.SCALE_SMOOTH);
+                    
+                    BufferedImage newImg = new BufferedImage(newResizedImage.getWidth(null), newResizedImage.getHeight(null), BufferedImage.TYPE_INT_ARGB);
+                        
+                    Graphics2D graphics2D = newImg.createGraphics();
+                    graphics2D.drawImage(newResizedImage, 0, 0, null);
+                    graphics2D.dispose();
+
+                    buttons.get(i).setImg(newImg);
+                }
+            }
+
+            for (int i = 0; i < subScreens.size(); i++) {                        
+                subScreens.get(i).loadImages();
+            }
+        } catch (IOException e) {
+			e.printStackTrace();
+		} 
+    }
+    
     public void drawGUIcomponent(Graphics2D g2d) { // does not print out itself but prints subscreens fine
-        if (active) {
+        if (visible) {
             g2d.setColor(background);
             g2d.fillRect(x, y, width,height);
             
@@ -51,13 +100,13 @@ public class Screen extends GUIcomponent{
         }
     }
 
-    public void setActive(boolean active){
-        this.active = active;
-        if (active) {
-            Main.getActiveScreens().add(this);
+    public void setVisible(boolean visible){
+        this.visible = visible;
+        /*if (visible) {
+            Main.getVisibleScreens().push(this);
         } else {
-            Main.getActiveScreens().remove(this);
-        }
+            Main.getVisibleScreens().pop();
+        }*/
     }
 
     public Color getBackground(){
