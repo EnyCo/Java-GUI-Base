@@ -25,9 +25,7 @@ public class InputKeyboard implements KeyListener{
             if (!Character.isISOControl(InputKeyboard.getVal())){
                 Main.getActiveTextBox().append(val);
             } else if (isKeyPressed(KeyEvent.VK_BACK_SPACE)) {
-                if (Main.getActiveTextBox().getText().length() > 0) {
-                    Main.getActiveTextBox().remend();
-                }  
+                Main.getActiveTextBox().remend(); 
             }
         }
     }

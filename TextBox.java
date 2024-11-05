@@ -4,24 +4,32 @@ public class TextBox extends GUIcomponent {
     private boolean visible;
     private int x, y;
     private int width, height;
+    private String name = "";
     private String text = "";
     private boolean seeBar = true;
-    public TextBox (boolean visible, int x, int y, int width, int height, String text) {
-        super(visible, x, y, width, height);
+    public TextBox (boolean visible, int x, int y, int width, int height, String name, String text) {
+        super(visible, x, y, width, height, name);
         this.visible = visible;
-        this.x = x;
-        this.y = y;
+        this.x = x - width/2;
+        this.y = y - height/2;
         this.width = width;
         this.height = height;
+        this.name = name;
         this.text = text;
     }
     
     public void drawGUIcomponent(Graphics2D g2d) {
         if (visible){
+            g2d.setFont(new Font(g2d.getFont().getName(), Font.PLAIN, height - 4));
             g2d.setColor( Color.BLACK );
-            g2d.setFont(new Font(g2d.getFont().getName(), Font.PLAIN, height - 4)); 
+            g2d.drawRect(x, y, width, height);
 
             String output = text;
+            if (text.length() == 0) { // if nothing inside display textbox name
+                g2d.setColor( Color.WHITE );
+                output = name;
+            }
+
             Rectangle box = g2d.getFont().createGlyphVector(g2d.getFontRenderContext(), 
                 output).getPixelBounds(null, x, y);
                 
@@ -34,8 +42,6 @@ public class TextBox extends GUIcomponent {
             g2d.drawString(output, 
                 x + width/2 - (int)(box.getWidth()/2),
                 y + height/2 + (int)(box.getHeight()/2)); 
-                
-            g2d.drawRect(x, y, width, height);
                 
                 
             if (Main.getActiveTextBox() != null) {
@@ -50,20 +56,14 @@ public class TextBox extends GUIcomponent {
         }
     }
 
-    public String getText(){
-        return text;
-    }
-    public void setText(String text){
-        this.text = text;
-    }
 
     public void append(char text){
         this.text += text;
     }
 
     public void remend(){
-        if (text.length() - 1 >= 0){
-            setText(text.substring(0, text.length() - 1));
+        if (text.length() > 0){
+            text = text.substring(0, text.length() - 1);
         }
     }
 
@@ -85,7 +85,7 @@ public class TextBox extends GUIcomponent {
 
     public String onEnter() {
         Main.setActiveTextBox(null);
-        return getText();
+        return text;
     }
 
 }

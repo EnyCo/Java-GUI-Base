@@ -8,11 +8,11 @@ abstract public class Button extends GUIcomponent {
     private BufferedImage img = null;
     private String name = "";
     
-    public Button (boolean visible, int x, int y, int width, int height, BufferedImage img, String name) {
-        super(visible, x, y, width, height);
+    public Button (boolean visible, int x, int y, int width, int height, String name, BufferedImage img) {
+        super(visible, x, y, width, height, name);
         this.visible = visible;
-        this.x = x;
-        this.y = y;
+        this.x = x - width/2;
+        this.y = y - height/2;
         this.width = width;
         this.height = height;
         this.img = img;
@@ -41,10 +41,6 @@ abstract public class Button extends GUIcomponent {
     }
     public void setImg(BufferedImage img){
         this.img = img;
-    }
-
-    public String getName(){
-        return name;
     }
 
     public boolean isHover(int x2, int y2) {

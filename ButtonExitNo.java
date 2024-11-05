@@ -1,8 +1,8 @@
 import java.awt.image.BufferedImage;
 
 public class ButtonExitNo extends Button {
-    public ButtonExitNo (boolean active, int x, int y, int width, int height, BufferedImage img, String text) {
-        super(active, x, y, width, height, img, text);
+    public ButtonExitNo (boolean active, int x, int y, int width, int height, String name, BufferedImage img) {
+        super(active, x, y, width, height, name, img);
     }
 
     public void onClick() { //WILL CRASH IF SCREEN DOES NOT HAVE THESE TWO BUTTONS

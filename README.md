@@ -9,6 +9,8 @@ STYLE:
         - first list will be images 
         - second list will be buttons
         - third list will be text boxes
+
+    - every component is located by center point.
         
 
 TESTING:
@@ -16,4 +18,4 @@ TESTING:
 
 TODO:
     - put new audios into struct
-    - create default button sizes to pull from (top of MAIN)
+        - make audio tied to guiComponents?

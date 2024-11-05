@@ -1,9 +1,7 @@
 import java.io.*;
 import java.awt.*;
 import java.awt.datatransfer.*;
-import java.awt.image.*;
 import java.util.*;
-import javax.imageio.*;
 import javax.swing.*;
 
 public class Main extends JFrame
@@ -134,25 +132,25 @@ public class Main extends JFrame
     }
 
     private void setScreens() {
-        Screen exitDialogue = new Screen(false, WIDTH/3, HEIGHT/3, WIDTH/3, HEIGHT/3, Color.LIGHT_GRAY, "Exit Screen",
+        Screen exitDialogue = new Screen(false, WIDTH/3, HEIGHT/3, ComponentSize.Large.getWidth(), ComponentSize.Large.getHeight(), "Exit Screen", Color.LIGHT_GRAY,
         new ArrayList<Img>(Arrays.asList()),
         new ArrayList<Button>(Arrays.asList(// button list
-            new ButtonExitYes(true, WIDTH*4/10-50, HEIGHT/2-25, 100, 50, null, "yes"),
-            new ButtonExitNo(true, WIDTH*6/10-50, HEIGHT/2-25, 100, 50, null, "no")
+            new ButtonExitYes(true, WIDTH*4/10, HEIGHT/2, ComponentSize.Small.getWidth(), ComponentSize.Small.getHeight(), "yes", null),
+            new ButtonExitNo(true, WIDTH*6/10, HEIGHT/2, ComponentSize.Small.getWidth(), ComponentSize.Small.getHeight(), "no", null)
             )),
         new ArrayList<TextBox>(Arrays.asList()),// textbox list
         new ArrayList<Screen>(Arrays.asList())// subscreen list
         );
 
 
-        Screens.put("Start Screen", new Screen(true, 0, 0, WIDTH, HEIGHT, Color.GRAY, "Start Screen",
+        Screens.put("Start Screen", new Screen(true, 0, 0, ComponentSize.ScreenDefault.getWidth(), ComponentSize.ScreenDefault.getHeight(), "Start Screen", Color.GRAY, 
                 new ArrayList<Img>(Arrays.asList(
-                    new Img(true, 0, 0, WIDTH, 100, null, "banner")
+                    new Img(true, WIDTH/2, ComponentSize.BannerDefault.getHeight()/2, ComponentSize.BannerDefault.getWidth(), ComponentSize.BannerDefault.getHeight(), "banner", null)
                 )),
                 new ArrayList<Button>(Arrays.asList(
                     )),
                 new ArrayList<TextBox>(Arrays.asList(
-                    new TextBox(true, WIDTH/2-50, HEIGHT/2-10, 100, 20, ""))),
+                    new TextBox(true, WIDTH/2, HEIGHT/2, ComponentSize.TextBoxDefault.getWidth(), ComponentSize.TextBoxDefault.getHeight(), "Your Name", ""))),
                 new ArrayList<Screen>(Arrays.asList(
                     exitDialogue))
                 )
@@ -182,18 +180,43 @@ public class Main extends JFrame
         Thread clock = new Thread(new ClockThread());
         clock.start();
 
+        Thread inputProcess = new Thread(new ThreadInputProcess());
+    	inputProcess.start();
+
     	Thread outputVisual = new Thread(new ThreadOutputVisual());
     	outputVisual.start();
 
         Thread outputAudio = new Thread(new ThreadOutputAudio());
     	outputAudio.start();
 
-        Thread inputProcess = new Thread(new ThreadInputProcess());
-    	inputProcess.start();
-        //all major screen button and variable data here. ?
-
     	while (!gameOver) {// this keep everything running
 			Thread.sleep(10);
     	}
+    }
+
+    enum ComponentSize { // 2,3,4,6,12?? 
+        ScreenDefault(WIDTH, HEIGHT), 
+        TextBoxDefault(WIDTH/10, HEIGHT/40), 
+        BannerDefault(WIDTH, HEIGHT/10), 
+
+        Small(WIDTH/12, HEIGHT/12), 
+        Medium(WIDTH/4, HEIGHT/4), 
+        Large(WIDTH/3, HEIGHT/3),
+        XtraLarge(WIDTH/2, HEIGHT/2);
+      
+        private int width;
+        private int height;
+
+        private ComponentSize(final int width, final int height) {
+            this.width = width;
+            this.height = height;
+        }
+      
+        public int getWidth() {
+          return width;
+        }
+        public int getHeight() {
+            return height;
+        }
     }
 }

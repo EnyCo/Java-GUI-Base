@@ -19,15 +19,15 @@ public class Screen extends GUIcomponent{
     private ArrayList<TextBox> textboxes;
     private ArrayList<Screen> subScreens;
 
-    public Screen(boolean visible, int x, int y, int width, int height, Color background, String name, ArrayList<Img> imgs, ArrayList<Button> buttons, ArrayList<TextBox> textboxes, ArrayList<Screen> subScreens) {
-        super(visible, x, y, width, height);
+    public Screen(boolean visible, int x, int y, int width, int height, String name, Color background, ArrayList<Img> imgs, ArrayList<Button> buttons, ArrayList<TextBox> textboxes, ArrayList<Screen> subScreens) {
+        super(visible, x, y, width, height, name);
         this.visible = visible;
         this.x = x;
         this.y = y;
         this.width = width;
         this.height = height;
-        this.background = background;
         this.name = name;
+        this.background = background;
         this.imgs = imgs;
         this.buttons = buttons;
         this.textboxes = textboxes;
@@ -83,6 +83,7 @@ public class Screen extends GUIcomponent{
         if (visible) {
             g2d.setColor(background);
             g2d.fillRect(x, y, width,height);
+            //g2d.fillRoundRect(x, y, width, height, 25, 25);
             
             for (int i = 0; i < imgs.size(); i++) {
                 imgs.get(i).drawGUIcomponent(g2d);
@@ -102,26 +103,10 @@ public class Screen extends GUIcomponent{
 
     public void setVisible(boolean visible){
         this.visible = visible;
-        /*if (visible) {
-            Main.getVisibleScreens().push(this);
-        } else {
-            Main.getVisibleScreens().pop();
-        }*/
     }
 
     public Color getBackground(){
         return background;
-    }
-    public void setBackground(Color background){
-        this.background = background;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public ArrayList<Img> getImgs() {
-        return imgs;
     }
 
     public ArrayList<Button> getButtons() {

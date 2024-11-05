@@ -8,11 +8,11 @@ public class Img extends GUIcomponent {
     private BufferedImage img = null;
     private String name = "";
     
-    public Img (boolean visible, int x, int y, int width, int height, BufferedImage img, String name) {
-        super(visible, x, y, width, height);
+    public Img (boolean visible, int x, int y, int width, int height, String name, BufferedImage img) {
+        super(visible, x, y, width, height, name);
         this.visible = visible;
-        this.x = x;
-        this.y = y;
+        this.x = x - width/2;
+        this.y = y - height/2;
         this.width = width;
         this.height = height;
         this.img = img;
@@ -26,16 +26,9 @@ public class Img extends GUIcomponent {
         }
     }
 
-    public BufferedImage getImg(){
-        return img;
-    }
     public void setImg(BufferedImage img){
         this.img = img;
         width = img.getWidth();
         height = img.getHeight();
-    }
-
-    public String getName(){
-        return name;
     }
 }

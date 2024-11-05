@@ -1,6 +1,5 @@
 import java.awt.*;
 import java.awt.event.*;
-import java.util.*;
 
 public class ThreadInputProcess implements Runnable {
     @Override
@@ -50,10 +49,10 @@ public class ThreadInputProcess implements Runnable {
                 } else {
                     Main.pushVisibleScreens(Main.getActiveScreen().getSubScreens().get(0));
                 }
-                for (int i = 0; i < Main.getVisibleScreens().size(); i++) {
+                /*for (int i = 0; i < Main.getVisibleScreens().size(); i++) {
                     System.out.print(Main.getVisibleScreens().get(i).getName() + " ");
                 }
-                System.out.println();
+                System.out.println();*/
             }
 
 

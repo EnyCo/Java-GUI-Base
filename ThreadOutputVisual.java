@@ -1,7 +1,6 @@
 import java.awt.*;
 import java.awt.image.*;
-import java.util.HashMap;
-import java.util.Map;
+import java.util.*;
 
 public class ThreadOutputVisual implements Runnable {    
     @Override
