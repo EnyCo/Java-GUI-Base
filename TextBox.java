@@ -1,6 +1,6 @@
 import java.awt.*;
 
-public class TextBox extends GUIcomponent {
+public class TextBox extends GUIComponent {
     private boolean visible;
     private int x, y;
     private int width, height;
@@ -18,7 +18,7 @@ public class TextBox extends GUIcomponent {
         this.text = text;
     }
     
-    public void drawGUIcomponent(Graphics2D g2d) {
+    public void drawGUIComponent(Graphics2D g2d) {
         if (visible){
             g2d.setFont(new Font(g2d.getFont().getName(), Font.PLAIN, height - 4));
             g2d.setColor( Color.BLACK );

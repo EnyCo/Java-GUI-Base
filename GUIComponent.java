@@ -1,12 +1,12 @@
 import java.awt.*;
 
-public abstract class GUIcomponent {
+public abstract class GUIComponent {
     private boolean visible = false;
     private int x, y;
     private int width, height;
     private String name;
 
-    public GUIcomponent(boolean visible, int x, int y, int width, int height, String name) {
+    public GUIComponent(boolean visible, int x, int y, int width, int height, String name) {
         this.visible = visible;
         this.x = x;
         this.y = y;
@@ -15,7 +15,7 @@ public abstract class GUIcomponent {
         this.name = name;
     }
 
-    public abstract void drawGUIcomponent(Graphics2D g2d);
+    public abstract void drawGUIComponent(Graphics2D g2d);
 
     public boolean getVisible() {
         return visible;

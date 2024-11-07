@@ -5,7 +5,7 @@ import java.util.*;
 
 import javax.imageio.ImageIO;
 
-public class Screen extends GUIcomponent{
+public class Screen extends GUIComponent{
     private boolean visible = false;
     private int x = 0;
     private int y = 0;
@@ -79,24 +79,24 @@ public class Screen extends GUIcomponent{
 		} 
     }
     
-    public void drawGUIcomponent(Graphics2D g2d) { // does not print out itself but prints subscreens fine
+    public void drawGUIComponent(Graphics2D g2d) { // does not print out itself but prints subscreens fine
         if (visible) {
             g2d.setColor(background);
             g2d.fillRect(x, y, width,height);
             //g2d.fillRoundRect(x, y, width, height, 25, 25);
             
             for (int i = 0; i < imgs.size(); i++) {
-                imgs.get(i).drawGUIcomponent(g2d);
+                imgs.get(i).drawGUIComponent(g2d);
             }
             for (int i = 0; i < buttons.size(); i++) {
-                buttons.get(i).drawGUIcomponent(g2d);
+                buttons.get(i).drawGUIComponent(g2d);
             }
             for (int i = 0; i < textboxes.size(); i++) {
-                textboxes.get(i).drawGUIcomponent(g2d);
+                textboxes.get(i).drawGUIComponent(g2d);
             }
             
             for (int i = 0; i < subScreens.size(); i++) {
-                subScreens.get(i).drawGUIcomponent(g2d);
+                subScreens.get(i).drawGUIComponent(g2d);
             }  
         }
     }

@@ -1,7 +1,7 @@
 import java.awt.*;
 import java.awt.image.BufferedImage;
 
-public class Img extends GUIcomponent {
+public class Img extends GUIComponent {
     private boolean visible;
     private int x, y;
     private int width, height;
@@ -20,7 +20,7 @@ public class Img extends GUIcomponent {
         this.img = img;
     }
 
-    public void drawGUIcomponent(Graphics2D g2d) {
+    public void drawGUIComponent(Graphics2D g2d) {
         if (visible){
             g2d.drawImage(img, x, y, null);
         }

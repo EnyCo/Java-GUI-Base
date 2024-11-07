@@ -28,7 +28,7 @@ public class ThreadOutputVisual implements Runnable {
                 //int y = (int)p.getY();
 
                 for (Map.Entry<String, Screen> entry : Main.getScreens().entrySet()) {
-                    entry.getValue().drawGUIcomponent(g2d);
+                    entry.getValue().drawGUIComponent(g2d);
                 }
                 
                 graphics = buffer.getDrawGraphics();
