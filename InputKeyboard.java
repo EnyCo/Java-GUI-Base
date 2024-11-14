@@ -1,49 +1,72 @@
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
-import java.util.*;
 
 public class InputKeyboard implements KeyListener{ 
-    private Map<Integer, Boolean> keyStates = new HashMap<>();
-    private static char val = ' ';
+    private static final int NUM_KEYS = 522;// 256 if downsizing is needed
         
-    public synchronized void updateKeyStates(KeyEvent e, boolean isPressed){// updates key's states
-        int keyCode = e.getKeyCode();
-        keyStates.put(keyCode, isPressed);
+    private enum KeyState{
+        RELEASED, PRESSED, ONCE
+    }
+    
+    private boolean[] currentKeys = new boolean[NUM_KEYS];// which keys are currently pressed
+    private KeyState[] keys = new KeyState[NUM_KEYS];
+    
+    private static char val = ' ';
+    
+    public InputKeyboard(){ 
+        for(int i = 0; i < NUM_KEYS; i++){// sets all keys to not pressed
+            keys[i] = KeyState.RELEASED;
+        }
+    }
+        
+    public synchronized void updateKeyStates(){// updates key's states
+        for(int i = 0; i < NUM_KEYS; i++){
+            if(currentKeys[i]){
+                if(keys[i] == KeyState.RELEASED)
+                    keys[i] = KeyState.ONCE;
+                else
+                    keys[i] = KeyState.PRESSED;
+            } else{
+                keys[i] = KeyState.RELEASED;
+            }
+        }
+    }
+        
+    public boolean keyDown(int keyID){
+        return keys[keyID] == KeyState.ONCE || keys[keyID] == KeyState.PRESSED;
+    }
+        
+    public boolean keyDownOnce(int keyID){
+        return keys[keyID] == KeyState.ONCE;
     }
         
     public synchronized void keyPressed(KeyEvent e){
-        updateKeyStates(e, true);
+        int keyCode = e.getKeyCode();
+        
+        if( keyCode >= 0 && keyCode < NUM_KEYS ){
+            currentKeys[keyCode] = true;
+        }
     }
 
     public synchronized void keyReleased(KeyEvent e){
-        updateKeyStates(e, false);
+        int keyCode = e.getKeyCode();
+        if( keyCode >= 0 && keyCode < NUM_KEYS ){
+           currentKeys[keyCode] = false;
+        }
     }
 
     public void keyTyped(KeyEvent e){
         val = e.getKeyChar();
         if (Main.getActiveTextBox() != null) {
-            if (!Character.isISOControl(InputKeyboard.getVal())){
+            if (!Character.isISOControl(val)){
                 Main.getActiveTextBox().append(val);
-            } else if (isKeyPressed(KeyEvent.VK_BACK_SPACE)) {
+            } else if (InputKeyboard.getKey() == KeyEvent.VK_BACK_SPACE) {
                 Main.getActiveTextBox().remend(); 
             }
-        }
+        }   
     }
     
-    public boolean isKeyPressed(int keyCode) {
-        return keyStates.getOrDefault(keyCode, false);
-    }
-
-    public boolean isKeyPressedOnce(int keyCode) {
-        if (keyStates.getOrDefault(keyCode, false)) {
-            keyStates.put(keyCode, false); // Reset state after checking
-            return true;
-        }
-        return false;
-    }
-
-
-    public static char getVal(){
+    public static char getKey(){
         return val;
     }
 }

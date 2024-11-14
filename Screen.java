@@ -12,14 +12,13 @@ public class Screen extends GUIComponent{
     private int width = 0;
     private int height = 0;
 
-    private Color background;
     private String name;
     private ArrayList<Img> imgs;
     private ArrayList<Button> buttons;
     private ArrayList<TextBox> textboxes;
     private ArrayList<Screen> subScreens;
 
-    public Screen(boolean visible, int x, int y, int width, int height, String name, Color background, ArrayList<Img> imgs, ArrayList<Button> buttons, ArrayList<TextBox> textboxes, ArrayList<Screen> subScreens) {
+    public Screen(boolean visible, int x, int y, int width, int height, String name, ArrayList<Img> imgs, ArrayList<Button> buttons, ArrayList<TextBox> textboxes, ArrayList<Screen> subScreens) {
         super(visible, x, y, width, height, name);
         this.visible = visible;
         this.x = x;
@@ -27,7 +26,6 @@ public class Screen extends GUIComponent{
         this.width = width;
         this.height = height;
         this.name = name;
-        this.background = background;
         this.imgs = imgs;
         this.buttons = buttons;
         this.textboxes = textboxes;
@@ -78,13 +76,9 @@ public class Screen extends GUIComponent{
 			e.printStackTrace();
 		} 
     }
-    
+
     public void drawGUIComponent(Graphics2D g2d) { // does not print out itself but prints subscreens fine
-        if (visible) {
-            g2d.setColor(background);
-            g2d.fillRect(x, y, width,height);
-            //g2d.fillRoundRect(x, y, width, height, 25, 25);
-            
+        if (visible) {            
             for (int i = 0; i < imgs.size(); i++) {
                 imgs.get(i).drawGUIComponent(g2d);
             }
@@ -105,8 +99,8 @@ public class Screen extends GUIComponent{
         this.visible = visible;
     }
 
-    public Color getBackground(){
-        return background;
+    public ArrayList<Img> getImgs() {
+        return imgs;
     }
 
     public ArrayList<Button> getButtons() {

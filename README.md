@@ -4,7 +4,7 @@ made by Enay Bhatnagar on 10/10/2024
 
 
 STYLE:
-    - end all commented out (or not!) debug code with "debug"
+    - end all commented out (or not!) debug code with "debug" or "ERROR"
     - Screens hold arraylist<arraylist<GUIcomponent>>
         - first list will be images 
         - second list will be buttons
@@ -18,4 +18,6 @@ TESTING:
 
 TODO:
     - put new audios into struct
-        - make audio tied to guiComponents?
+    - mouse click not actually checking for once? (maybe a issue with multithreading)
+    - make audio tied to guiComponents?
+    - https://www.infoworld.com/article/2161050/more-on-getters-and-setters.html

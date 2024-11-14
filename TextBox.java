@@ -20,13 +20,16 @@ public class TextBox extends GUIComponent {
     
     public void drawGUIComponent(Graphics2D g2d) {
         if (visible){
+            super.drawGUIComponent(g2d);
+            
             g2d.setFont(new Font(g2d.getFont().getName(), Font.PLAIN, height - 4));
+            g2d.setColor( Color.WHITE );
+            g2d.fillRect(x, y, width, height);
             g2d.setColor( Color.BLACK );
             g2d.drawRect(x, y, width, height);
 
             String output = text;
             if (text.length() == 0) { // if nothing inside display textbox name
-                g2d.setColor( Color.WHITE );
                 output = name;
             }
 

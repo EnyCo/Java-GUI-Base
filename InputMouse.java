@@ -3,14 +3,37 @@ import java.util.*;
 import java.awt.*;
 
 public class InputMouse implements MouseListener, MouseMotionListener, MouseWheelListener {
-    private Map<Integer, Boolean> buttonStates = new HashMap<>();
+    private Map<Integer, MouseState> buttonStates = new HashMap<>();
     private Point pos = new Point( 0, 0 );
-    
+
+    private enum MouseState {
+        RELEASED, // Not down
+        PRESSED,  // Down, but not the first time
+        ONCE      // Down for the first time
+    }
+
     public synchronized void updateButtonStates(MouseEvent e, boolean isPressed){// updates key's states
         int buttonCode = e.getButton();
-        buttonStates.put(buttonCode, isPressed);
+        if (isPressed) {
+            if (buttonStates.get(buttonCode) == MouseState.RELEASED) {
+                buttonStates.put(buttonCode, MouseState.ONCE);
+            } else {
+                buttonStates.put(buttonCode, MouseState.PRESSED);
+            }
+           
+        } else {
+            buttonStates.put(buttonCode, MouseState.RELEASED);
+        }
         //System.out.println(buttonCode);
     }
+    public boolean buttonDownOnce( int button ) {
+        return buttonStates.get(button)  == MouseState.ONCE;
+    }
+    
+    /*public boolean buttonDown( int button ) {
+        return buttonStates.get(button) == MouseState.ONCE ||
+            buttonStates.get(button) == MouseState.PRESSED;
+    }*/
 
     public void mouseClicked(MouseEvent e) {
         //System.out.println("Mouse clicked at (" + e.getX() + ", " + e.getY() + ")");
@@ -53,14 +76,6 @@ public class InputMouse implements MouseListener, MouseMotionListener, MouseWhee
     @Override
     public void mouseWheelMoved(MouseWheelEvent e) {
         //System.out.println("Mouse wheel moved: " + e.getWheelRotation());
-    }
-
-    public boolean isButtonClicked(int buttonCode) {
-        if (buttonStates.getOrDefault(buttonCode, false)) {
-            buttonStates.put(buttonCode, false); // Reset state after checking
-            return true;
-        }
-        return false;
     }
 
     public Point getPosition() {

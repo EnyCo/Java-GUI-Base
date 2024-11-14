@@ -2,44 +2,31 @@ import java.awt.*;
 import java.awt.image.BufferedImage;
 
 abstract public class Button extends GUIComponent {
-    private boolean visible;
-    private int x, y;
-    private int width, height;
-    private BufferedImage img = null;
-    private String name = "";
+    protected int x, y;
+    protected BufferedImage img = null;
     
-    public Button (boolean visible, int x, int y, int width, int height, String name, BufferedImage img) {
+    public Button (boolean visible, int x, int y, int width, int height, String name) {
         super(visible, x, y, width, height, name);
-        this.visible = visible;
         this.x = x - width/2;
         this.y = y - height/2;
-        this.width = width;
-        this.height = height;
-        this.img = img;
-        this.name = name;
-        this.img = img;
     }
 
     public void drawGUIComponent(Graphics2D g2d) {
+        /*if (this.name.equals("next!")) {
+            System.out.println(visible);
+        }*/
         if (visible){
+            super.drawGUIComponent(g2d);
             if (img != null) {
                 g2d.drawImage(img, x, y, null);
-            } else {
-                g2d.setColor( Color.BLACK );
-                Rectangle text = g2d.getFont().createGlyphVector(g2d.getFontRenderContext(), 
-                    name).getPixelBounds(null, x, y);
-                g2d.drawString(name, 
-                    x + width/2 - (int)(text.getWidth()/2),
-                    y + height/2 + (int)(text.getHeight()/2)); 
-                g2d.drawRect(x, y, width, height);
-            }
+            }            
         }
     }
 
     public BufferedImage getImg(){
         return img;
     }
-    public void setImg(BufferedImage img){
+    public synchronized void setImg(BufferedImage img){
         this.img = img;
     }
 

@@ -2,6 +2,8 @@ import java.io.*;
 import java.awt.*;
 import java.awt.datatransfer.*;
 import java.util.*;
+import java.util.concurrent.ConcurrentHashMap;
+
 import javax.swing.*;
 
 public class Main extends JFrame
@@ -23,8 +25,8 @@ public class Main extends JFrame
      * keyboard reader
      */
     private static InputKeyboard keyboard = new InputKeyboard();
-    public static InputKeyboard getKeyboard() {
-        return keyboard;
+        public static InputKeyboard getKeyboard() {
+            return keyboard;
     }
     
     /*
@@ -68,9 +70,12 @@ public class Main extends JFrame
      * should be list of buttons for each screen (may be in a screen object)
      */
 
-    private static HashMap<String, Screen> Screens = new HashMap<String, Screen>();
-    public static HashMap<String, Screen> getScreens(){
+    private static ConcurrentHashMap<String, Screen> Screens = new ConcurrentHashMap<String, Screen>();
+    public synchronized static ConcurrentHashMap<String, Screen> getScreens(){
         return Screens;
+    }
+    public static void updateScreen(String key, Screen screen) { 
+        Screens.put(key, screen); 
     }
 
     private static Stack<Screen> visibleScreens = new Stack<Screen>();
@@ -81,9 +86,10 @@ public class Main extends JFrame
         visibleScreens.push(screen);
         screen.setVisible(true);
     }
-    public static void popVisibleScreens(){
+    public static Screen popVisibleScreens(){
         Screen rem = visibleScreens.pop();
         rem.setVisible(false);
+        return rem;
     }
 
     public static Screen getActiveScreen(){
@@ -132,30 +138,80 @@ public class Main extends JFrame
     }
 
     private void setScreens() {
-        Screen exitDialogue = new Screen(false, WIDTH/3, HEIGHT/3, ComponentSize.Large.getWidth(), ComponentSize.Large.getHeight(), "Exit Screen", Color.LIGHT_GRAY,
-        new ArrayList<Img>(Arrays.asList()),
+        Screen exitDialogue = new Screen(false, WIDTH/3, HEIGHT/3, ComponentSize.Large.getWidth(), ComponentSize.Large.getHeight(), "Exit Screen",
+        new ArrayList<Img>(Arrays.asList(
+            new Img(true, WIDTH/2, HEIGHT/2, ComponentSize.Large.getWidth(), ComponentSize.Large.getHeight(), "Exit Screen")
+            )),
         new ArrayList<Button>(Arrays.asList(// button list
-            new ButtonExitYes(true, WIDTH*4/10, HEIGHT/2, ComponentSize.Small.getWidth(), ComponentSize.Small.getHeight(), "yes", null),
-            new ButtonExitNo(true, WIDTH*6/10, HEIGHT/2, ComponentSize.Small.getWidth(), ComponentSize.Small.getHeight(), "no", null)
+            new ButtonExitYes(true, WIDTH*17/40, HEIGHT/2, ComponentSize.Small.getWidth(), ComponentSize.Small.getHeight(), "yes"),
+            new ButtonExitNo(true, WIDTH*23/40, HEIGHT/2, ComponentSize.Small.getWidth(), ComponentSize.Small.getHeight(), "no")
             )),
         new ArrayList<TextBox>(Arrays.asList()),// textbox list
         new ArrayList<Screen>(Arrays.asList())// subscreen list
         );
 
-
-        Screens.put("Start Screen", new Screen(true, 0, 0, ComponentSize.ScreenDefault.getWidth(), ComponentSize.ScreenDefault.getHeight(), "Start Screen", Color.GRAY, 
+        Screens.put("Start Screen 0", new Screen(true, 0, 0, ComponentSize.ScreenDefault.getWidth(), ComponentSize.ScreenDefault.getHeight(), "Start Screen 0", 
                 new ArrayList<Img>(Arrays.asList(
-                    new Img(true, WIDTH/2, ComponentSize.BannerDefault.getHeight()/2, ComponentSize.BannerDefault.getWidth(), ComponentSize.BannerDefault.getHeight(), "banner", null)
-                )),
+                    new Img(true, WIDTH/2, HEIGHT/2, WIDTH, HEIGHT, "background")
+                    )),
                 new ArrayList<Button>(Arrays.asList(
+                    new ButtonNext(false, WIDTH - ComponentSize.Small.getWidth(), HEIGHT - ComponentSize.Small.getHeight()*2, ComponentSize.Small.getWidth(), ComponentSize.Small.getHeight(), "next!")
                     )),
                 new ArrayList<TextBox>(Arrays.asList(
-                    new TextBox(true, WIDTH/2, HEIGHT/2, ComponentSize.TextBoxDefault.getWidth(), ComponentSize.TextBoxDefault.getHeight(), "Your Name", ""))),
+                    new TextBox(true, WIDTH/2, HEIGHT/2, ComponentSize.TextBoxDefault.getWidth(), ComponentSize.TextBoxDefault.getHeight(), "Your Name", "")
+                    )),
                 new ArrayList<Screen>(Arrays.asList(
                     exitDialogue))
                 )
         );
-        visibleScreens.push(Screens.get("Start Screen"));
+
+        
+
+        Screens.put("Question 1", new Screen(false, 0, 0, ComponentSize.ScreenDefault.getWidth(), ComponentSize.ScreenDefault.getHeight(), "Question 1", 
+            new ArrayList<Img>(Arrays.asList(
+                new Img(true, WIDTH/2, HEIGHT/2, WIDTH, HEIGHT, "background"),
+                new Img(true, WIDTH/2, HEIGHT/2, HEIGHT, HEIGHT, "BOX"),
+                new Img(true, (WIDTH - HEIGHT)/4, HEIGHT/4, ComponentSize.Medium2.getWidth(), ComponentSize.Medium2.getHeight(), "TEXT"),
+                new Img(false, WIDTH - (WIDTH - HEIGHT)/4, HEIGHT*2/5, ComponentSize.BannerDefault.getWidth(), ComponentSize.BannerDefault.getHeight(), "NOTES")
+                )),
+            new ArrayList<Button>(Arrays.asList(
+                //temp for infobox
+                //new ButtonIncorrect(true, (WIDTH - HEIGHT)/4, HEIGHT*1/5, ComponentSize.Medium2.getWidth(), ComponentSize.Medium2.getHeight(), "Incorrect"),
+                
+                new ButtonAnswer(true, (WIDTH - HEIGHT)/4, HEIGHT/2, ComponentSize.Medium2.getWidth(), ComponentSize.Medium2.getHeight(), "Sit down right away to settle in.", 0),
+                new ButtonAnswer(true, (WIDTH - HEIGHT)/4, HEIGHT*17/24, ComponentSize.Medium2.getWidth(), ComponentSize.Medium2.getHeight(), "Stand by your seat until the host sits.", 1),
+                
+                new ButtonNext(false, WIDTH - ComponentSize.Small.getWidth(), HEIGHT - ComponentSize.Small.getHeight()*2, ComponentSize.Small.getWidth(), ComponentSize.Small.getHeight(), "next!")
+                )),
+            new ArrayList<TextBox>(Arrays.asList(
+                )),
+            new ArrayList<Screen>(Arrays.asList(
+                exitDialogue))
+            )
+        );
+
+        Screens.put("Question 2", new Screen(false, 0, 0, ComponentSize.ScreenDefault.getWidth(), ComponentSize.ScreenDefault.getHeight(), "Question 2", 
+            new ArrayList<Img>(Arrays.asList(
+                new Img(true, WIDTH/2, HEIGHT/2, WIDTH, HEIGHT, "background"),
+                new Img(true, WIDTH/2, HEIGHT/2, HEIGHT, HEIGHT, "BOX")
+                )),
+            new ArrayList<Button>(Arrays.asList(
+                //temp for infobox
+                //new ButtonIncorrect(true, (WIDTH - HEIGHT)/4, HEIGHT*1/5, ComponentSize.Medium2.getWidth(), ComponentSize.Medium2.getHeight(), "Incorrect"),
+                
+                new ButtonAnswer(true, (WIDTH - HEIGHT)/4, HEIGHT/2, ComponentSize.Medium2.getWidth(), ComponentSize.Medium2.getHeight(), "Everything looks delicious! Start eating immediately.", 0),
+                new ButtonAnswer(true, (WIDTH - HEIGHT)/4, HEIGHT*17/24, ComponentSize.Medium2.getWidth(), ComponentSize.Medium2.getHeight(), "Bow slightly and say “Itadakimasu” to express gratitude for the meal and the effort that went into preparing it.", 1)
+                //,
+                //new ButtonNext(false, WIDTH - ComponentSize.Small.getWidth(), HEIGHT - ComponentSize.Small.getHeight()*2, ComponentSize.Small.getWidth(), ComponentSize.Small.getHeight(), "next!")
+                )),
+            new ArrayList<TextBox>(Arrays.asList(
+                )),
+            new ArrayList<Screen>(Arrays.asList(
+                exitDialogue))
+            )
+        );
+
+        visibleScreens.push(Screens.get("Start Screen 0"));
     }
 
     public Main() 
@@ -186,8 +242,8 @@ public class Main extends JFrame
     	Thread outputVisual = new Thread(new ThreadOutputVisual());
     	outputVisual.start();
 
-        Thread outputAudio = new Thread(new ThreadOutputAudio());
-    	outputAudio.start();
+        //Thread outputAudio = new Thread(new ThreadOutputAudio());
+    	//outputAudio.start();
 
     	while (!gameOver) {// this keep everything running
 			Thread.sleep(10);
@@ -197,9 +253,10 @@ public class Main extends JFrame
     enum ComponentSize { // 2,3,4,6,12?? 
         ScreenDefault(WIDTH, HEIGHT), 
         TextBoxDefault(WIDTH/10, HEIGHT/40), 
-        BannerDefault(WIDTH, HEIGHT/10), 
+        BannerDefault(WIDTH/6, HEIGHT*3/5), 
 
         Small(WIDTH/12, HEIGHT/12), 
+        Medium2(WIDTH/6, HEIGHT/6), 
         Medium(WIDTH/4, HEIGHT/4), 
         Large(WIDTH/3, HEIGHT/3),
         XtraLarge(WIDTH/2, HEIGHT/2);

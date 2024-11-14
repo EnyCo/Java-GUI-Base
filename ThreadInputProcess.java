@@ -4,18 +4,18 @@ import java.awt.event.*;
 public class ThreadInputProcess implements Runnable {
     @Override
     public void run() {
-        while (true) {                
+        while (true) {   
+            Main.getKeyboard().updateKeyStates();
+
             Point p = Main.getMouse().getPosition(); 
             int x = (int)(p.getX());
             int y = (int)p.getY();
 
 
-            if (Main.getMouse().isButtonClicked(1)) {
+            if (Main.getMouse().buttonDownOnce(1)) {
                 for (int i = 0; i < Main.getActiveScreen().getButtons().size(); i++) {
                     if (Main.getActiveScreen().getButtons().get(i).getVisible()) {
-                        if (Main.getActiveScreen().getButtons().get(i).isHover(x, y)){
-                            Main.setClang(true);
-                            
+                        if (Main.getActiveScreen().getButtons().get(i).isHover(x, y)) {
                             Main.getActiveScreen().getButtons().get(i).onClick();
                         }
                     }
@@ -33,12 +33,15 @@ public class ThreadInputProcess implements Runnable {
                 }
             }            
             
-            if (Main.getKeyboard().isKeyPressedOnce( KeyEvent.VK_ENTER )) {
+            if (Main.getKeyboard().keyDownOnce( KeyEvent.VK_ENTER )) {
                 if (Main.getActiveTextBox() != null) {
-                    Main.getActiveTextBox().onEnter();
+                    //String name = Main.getActiveTextBox().onEnter();
+                    
+                    Main.getActiveScreen().getButtons().get(0).setVisible(true);
+                    Main.setActiveTextBox(null);
                 }
             }
-            if (Main.getKeyboard().isKeyPressedOnce( KeyEvent.VK_ESCAPE )) {
+            if (Main.getKeyboard().keyDownOnce( KeyEvent.VK_ESCAPE )) {
                 if (Main.getActiveTextBox() != null) {
                     Main.setActiveTextBox(null);
                 } 
@@ -49,10 +52,6 @@ public class ThreadInputProcess implements Runnable {
                 } else {
                     Main.pushVisibleScreens(Main.getActiveScreen().getSubScreens().get(0));
                 }
-                /*for (int i = 0; i < Main.getVisibleScreens().size(); i++) {
-                    System.out.print(Main.getVisibleScreens().get(i).getName() + " ");
-                }
-                System.out.println();*/
             }
 
 
