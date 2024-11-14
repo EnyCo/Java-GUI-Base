@@ -1,20 +1,13 @@
 import java.awt.*;
 
 public class TextBox extends GUIComponent {
-    private boolean visible;
     private int x, y;
-    private int width, height;
-    private String name = "";
     private String text = "";
     private boolean seeBar = true;
     public TextBox (boolean visible, int x, int y, int width, int height, String name, String text) {
         super(visible, x, y, width, height, name);
-        this.visible = visible;
         this.x = x - width/2;
         this.y = y - height/2;
-        this.width = width;
-        this.height = height;
-        this.name = name;
         this.text = text;
     }
     

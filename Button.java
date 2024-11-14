@@ -1,7 +1,7 @@
 import java.awt.*;
-import java.awt.image.BufferedImage;
+import java.awt.image.*;
 
-abstract public class Button extends GUIComponent {
+abstract public class Button extends GUIComponentVis {
     protected int x, y;
     protected BufferedImage img = null;
     
@@ -9,25 +9,6 @@ abstract public class Button extends GUIComponent {
         super(visible, x, y, width, height, name);
         this.x = x - width/2;
         this.y = y - height/2;
-    }
-
-    public void drawGUIComponent(Graphics2D g2d) {
-        /*if (this.name.equals("next!")) {
-            System.out.println(visible);
-        }*/
-        if (visible){
-            super.drawGUIComponent(g2d);
-            if (img != null) {
-                g2d.drawImage(img, x, y, null);
-            }            
-        }
-    }
-
-    public BufferedImage getImg(){
-        return img;
-    }
-    public synchronized void setImg(BufferedImage img){
-        this.img = img;
     }
 
     public boolean isHover(int x2, int y2) {

@@ -18,19 +18,7 @@ public abstract class GUIComponent {
     public void drawGUIComponent(Graphics2D g2d){
         if (visible) {
             g2d.setColor(Color.BLACK);
-            //g2d.fillRect(x-width/2 + 5, y-height/2 + 5, width, height);
-            /*Color fillColor = new Color(0, 0, 0); // Black
-
-            for (int y = 0; y < image.getHeight(); y++) {
-                for (int x = 0; x < image.getWidth(); x++) {
-                    int color = image.getRGB(x, y);
-                    int alpha = (color >> 24) & 0xff;
-
-                    if (alpha == 255) {
-                        image.setRGB(x, y, fillColor.getRGB());
-                    }
-                }
-            }*/
+            g2d.fillRect(x-width/2 + 5, y-height/2 + 5, width, height);
 
             g2d.setColor( Color.WHITE );
             g2d.fillRect(x-width/2, y-height/2, width, height);
