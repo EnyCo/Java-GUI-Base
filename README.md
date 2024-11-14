@@ -18,6 +18,5 @@ TESTING:
 
 TODO:
     - put new audios into struct
-    - mouse click not actually checking for once? (maybe a issue with multithreading)
     - make audio tied to guiComponents?
     - https://www.infoworld.com/article/2161050/more-on-getters-and-setters.html

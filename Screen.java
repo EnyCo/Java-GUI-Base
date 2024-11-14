@@ -6,13 +6,7 @@ import java.util.*;
 import javax.imageio.ImageIO;
 
 public class Screen extends GUIComponent{
-    private boolean visible = false;
-    private int x = 0;
-    private int y = 0;
-    private int width = 0;
-    private int height = 0;
-
-    private String name;
+    private boolean visible;
     private ArrayList<Img> imgs;
     private ArrayList<Button> buttons;
     private ArrayList<TextBox> textboxes;
@@ -21,11 +15,6 @@ public class Screen extends GUIComponent{
     public Screen(boolean visible, int x, int y, int width, int height, String name, ArrayList<Img> imgs, ArrayList<Button> buttons, ArrayList<TextBox> textboxes, ArrayList<Screen> subScreens) {
         super(visible, x, y, width, height, name);
         this.visible = visible;
-        this.x = x;
-        this.y = y;
-        this.width = width;
-        this.height = height;
-        this.name = name;
         this.imgs = imgs;
         this.buttons = buttons;
         this.textboxes = textboxes;

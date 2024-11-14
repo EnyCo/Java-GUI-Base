@@ -1,4 +1,3 @@
-import java.awt.*;
 import java.awt.image.*;
 
 abstract public class Button extends GUIComponentVis {
