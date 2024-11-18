@@ -13,6 +13,11 @@ public class ThreadInputProcess implements Runnable {
 
 
             if (Main.getMouse().buttonDownOnce(1)) {
+                if (!Main.getActiveScreen().isHover(x, y)) { 
+                    Main.popVisibleScreens(); 
+                }
+
+
                 for (int i = 0; i < Main.getActiveScreen().getButtons().size(); i++) {
                     if (Main.getActiveScreen().getButtons().get(i).getVisible()) {
                         if (Main.getActiveScreen().getButtons().get(i).isHover(x, y)) {

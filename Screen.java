@@ -84,6 +84,11 @@ public class Screen extends GUIComponent{
         }
     }
 
+    public boolean isHover(int x2, int y2) {
+        return x2 >= x && y2 >= y 
+            && x2 <= x + width && y2 <= y + height;
+    }
+
     public void setVisible(boolean visible){
         this.visible = visible;
     }
