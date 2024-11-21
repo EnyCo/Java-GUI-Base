@@ -17,8 +17,8 @@ public abstract class GUIComponent {
 
     public void drawGUIComponent(Graphics2D g2d){
         if (visible) {
-            g2d.setColor(Color.BLACK);
-            g2d.fillRect(x-width/2 + 5, y-height/2 + 5, width, height);
+            //g2d.setColor(Color.BLACK);
+            //g2d.fillRect(x-width/2 + 5, y-height/2 + 5, width, height);
 
             g2d.setColor( Color.WHITE );
             g2d.fillRect(x-width/2, y-height/2, width, height);
@@ -37,7 +37,7 @@ public abstract class GUIComponent {
     public boolean getVisible() {
         return visible;
     }
-    public synchronized void setVisible(boolean vis){
+    public void setVisible(boolean vis){
         visible = vis;
     }
 

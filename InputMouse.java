@@ -1,84 +1,87 @@
+import java.awt.Point;
 import java.awt.event.*;
-import java.util.*;
-import java.awt.*;
-
-public class InputMouse implements MouseListener, MouseMotionListener, MouseWheelListener {
-    private Map<Integer, MouseState> buttonStates = new HashMap<>();
-    private Point pos = new Point( 0, 0 );
-
-    private enum MouseState {
-        RELEASED, // Not down
-        PRESSED,  // Down, but not the first time
-        ONCE      // Down for the first time
+public class InputMouse implements MouseListener, MouseMotionListener, MouseWheelListener{
+    private static final int BUTTON_COUNT = 3;// can be more
+    private Point mousePos = new Point( 0, 0 );
+    private Point currentPos = new Point( 0, 0 );
+  
+    private boolean[] state = new boolean[ BUTTON_COUNT ]; // which mouse buttons are currently pressed
+    private MouseState[] buttons = new MouseState[ BUTTON_COUNT ];
+        
+    private static int notches;
+    private enum MouseState{
+        RELEASED, PRESSED, ONCE
     }
-
-    public synchronized void updateButtonStates(MouseEvent e, boolean isPressed){// updates key's states
-        int buttonCode = e.getButton();
-        if (isPressed) {
-            if (buttonStates.get(buttonCode) == MouseState.RELEASED) {
-                buttonStates.put(buttonCode, MouseState.ONCE);
-            } else {
-                buttonStates.put(buttonCode, MouseState.PRESSED);
-            }
-           
-        } else {
-            buttonStates.put(buttonCode, MouseState.RELEASED);
+        
+    public InputMouse(){
+        for(int i = 0; i < BUTTON_COUNT; i++){// set all buttons to not pressed
+          buttons[i] = MouseState.RELEASED;
         }
-        //System.out.println(buttonCode);
     }
-    public boolean buttonDownOnce( int button ) {
-        return buttonStates.get(button)  == MouseState.ONCE;
+            
+    public synchronized void updateButtonStates(){//update buttons' states
+        mousePos = new Point(currentPos);
+        for(int i = 0; i < BUTTON_COUNT; i++){
+            if(state[i]){
+                if(buttons[i] == MouseState.RELEASED)
+                    buttons[i] = MouseState.ONCE;
+                else
+                    buttons[i] = MouseState.PRESSED;
+            } else{
+                buttons[i] = MouseState.RELEASED;
+            }
+        }
     }
     
-    /*public boolean buttonDown( int button ) {
-        return buttonStates.get(button) == MouseState.ONCE ||
-            buttonStates.get(button) == MouseState.PRESSED;
-    }*/
-
-    public void mouseClicked(MouseEvent e) {
-        //System.out.println("Mouse clicked at (" + e.getX() + ", " + e.getY() + ")");
+    public Point getPosition(){
+        return mousePos;
     }
-
-    @Override
-    public void mousePressed(MouseEvent e) {
-        updateButtonStates(e, true);
-        //System.out.println("Mouse pressed at (" + e.getX() + ", " + e.getY() + ")");
+    
+    public boolean buttonDownOnce( int button ){
+        return buttons[ button-1 ] == MouseState.ONCE;
     }
-
-    @Override
-    public void mouseReleased(MouseEvent e) {
-        updateButtonStates(e, false);
-        //System.out.println("Mouse released at (" + e.getX() + ", " + e.getY() + ")");
+    
+    public boolean buttonDown( int button ){
+        return buttons[ button-1 ] == MouseState.ONCE || buttons[ button-1 ] == MouseState.PRESSED;
     }
-
-    @Override
-    public void mouseEntered(MouseEvent e) {
-        //System.out.println("Mouse entered component.");
+      
+    public synchronized void mousePressed( MouseEvent e ){
+        state[ e.getButton()-1 ] = true;
     }
-
-    @Override
-    public void mouseExited(MouseEvent e) {
-        //System.out.println("Mouse exited component.");
+    
+    public synchronized void mouseReleased( MouseEvent e ){
+        state[ e.getButton()-1 ] = false;
     }
-
-    @Override
-    public void mouseDragged(MouseEvent e) {
-        //System.out.println("Mouse dragged to (" + e.getX() + ", " + e.getY() + ")");
-        pos = e.getPoint();
+    
+    public synchronized void mouseEntered( MouseEvent e ){
+        mouseMoved( e );
     }
-
-    @Override
-    public void mouseMoved(MouseEvent e) {
-        //System.out.println("Mouse moved to (" + e.getX() + ", " + e.getY() + ")");
-        pos = e.getPoint();
+      
+    public synchronized void mouseExited( MouseEvent e ){
+        mouseMoved( e );
     }
-
-    @Override
-    public void mouseWheelMoved(MouseWheelEvent e) {
-        //System.out.println("Mouse wheel moved: " + e.getWheelRotation());
+      
+    public synchronized void mouseDragged( MouseEvent e ){
+        mouseMoved( e );
     }
-
-    public Point getPosition() {
-        return pos;
+    
+    public synchronized void mouseMoved( MouseEvent e ){
+        currentPos = e.getPoint();
+    }
+      
+    public void mouseClicked( MouseEvent e ){
+        //System.out.println("clicked");
+    }
+      
+    public void mouseWheelMoved(MouseWheelEvent e){
+        notches = e.getWheelRotation();
+    }
+    
+    public int getNotches(){
+        return notches;
+    }
+    
+    public void setNotches(int newNotches){
+        notches = newNotches;
     }
 }

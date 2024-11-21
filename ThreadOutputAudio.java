@@ -7,10 +7,10 @@ public class ThreadOutputAudio implements Runnable {
 	public void run() {
 		while (true) {
             try {
-                if (Main.getClang()) {
+                /*if (Main.getClang()) {
                     playFile(folderName + "clang.wav");
                     Main.setClang(false);
-                }
+                }*/
             } catch (Exception e) {
                 System.err.println(e.getMessage());
             }

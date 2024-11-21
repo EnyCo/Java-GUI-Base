@@ -13,7 +13,7 @@ public abstract class GUIComponentVis extends GUIComponent {
     public BufferedImage getImg(){
         return img;
     }
-    public synchronized void setImg(BufferedImage img){
+    public void setImg(BufferedImage img){
         this.img = img;
     }
 
@@ -22,7 +22,7 @@ public abstract class GUIComponentVis extends GUIComponent {
             if (img == null) {
                 super.drawGUIComponent(g2d);
             } else {
-                ColorModel cm = img.getColorModel();
+                /*ColorModel cm = img.getColorModel();
                 boolean isAlphaPremultiplied = cm.isAlphaPremultiplied();
                 WritableRaster raster = img.copyData(null);
                 BufferedImage cpy =  new BufferedImage(cm, raster, isAlphaPremultiplied, null);
@@ -41,17 +41,17 @@ public abstract class GUIComponentVis extends GUIComponent {
                         }
                     }
                 }
-                g2d.drawImage(cpy, x+5, y+5, null);
+                g2d.drawImage(cpy, x+5, y+5, null);*/
                 
                 g2d.drawImage(img, x, y, null);
-            }            
+            }          
         }
     }
 
     public boolean getVisible() {
         return visible;
     }
-    public synchronized void setVisible(boolean vis){
+    public void setVisible(boolean vis){
         visible = vis;
     }
 

@@ -1,7 +1,7 @@
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 
-public class InputKeyboard implements KeyListener{ 
+public class InputKeyboard implements KeyListener { 
     private static final int NUM_KEYS = 522;// 256 if downsizing is needed
         
     private enum KeyState{

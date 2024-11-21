@@ -81,6 +81,7 @@ public class TextBox extends GUIComponent {
 
     public String onEnter() {
         Main.setActiveTextBox(null);
+        //System.out.println(text);
         return text;
     }
 

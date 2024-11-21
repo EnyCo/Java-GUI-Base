@@ -74,7 +74,7 @@ public class Main extends JFrame
     public synchronized static ConcurrentHashMap<String, Screen> getScreens(){
         return Screens;
     }
-    public static void updateScreen(String key, Screen screen) { 
+    public synchronized void updateScreen(String key, Screen screen) { 
         Screens.put(key, screen); 
     }
 
@@ -104,13 +104,26 @@ public class Main extends JFrame
         return activeTextBox;
     }
 
-    
-    private static boolean playClang = false; //store all audios in structure so not to flood this area.
-    public static void setClang(boolean p) {
-        playClang = p;
+    private static int total = 7;
+    public static int getTotal(){
+        return total;
     }
-    public static boolean getClang() {
-        return playClang;
+    private static int score = 0;
+    public static int getScore(){
+        return total;
+    }
+
+    public synchronized static void plus(int value) {
+        System.out.println(value);
+        score += value;
+    }
+
+    private static String user = "";
+    public static void setUser(String u){
+        user = u;
+    }
+    public static String getUser(){
+        return user;
     }
 
 
@@ -170,16 +183,14 @@ public class Main extends JFrame
         Screens.put("Question 1", new Screen(false, 0, 0, ComponentSize.ScreenDefault.getWidth(), ComponentSize.ScreenDefault.getHeight(), "Question 1", 
             new ArrayList<Img>(Arrays.asList(
                 new Img(true, WIDTH/2, HEIGHT/2, WIDTH, HEIGHT, "background"),
-                new Img(true, WIDTH/2, HEIGHT/2, HEIGHT, HEIGHT, "BOX"),
-                new Img(true, (WIDTH - HEIGHT)/4, HEIGHT/4, ComponentSize.Medium2.getWidth(), ComponentSize.Medium2.getHeight(), "TEXT"),
+                new Img(true, WIDTH/2, HEIGHT/2, HEIGHT, HEIGHT, "1"),
+
+                new Img(true, (WIDTH - HEIGHT)/4, HEIGHT/4, ComponentSize.Medium2.getWidth(), ComponentSize.Medium2.getHeight(), "Question 1"),
                 new Img(false, WIDTH - (WIDTH - HEIGHT)/4, HEIGHT*2/5, ComponentSize.BannerDefault.getWidth(), ComponentSize.BannerDefault.getHeight(), "NOTES")
                 )),
             new ArrayList<Button>(Arrays.asList(
-                //temp for infobox
-                //new ButtonIncorrect(true, (WIDTH - HEIGHT)/4, HEIGHT*1/5, ComponentSize.Medium2.getWidth(), ComponentSize.Medium2.getHeight(), "Incorrect"),
-                
-                new ButtonAnswer(true, (WIDTH - HEIGHT)/4, HEIGHT/2, ComponentSize.Medium2.getWidth(), ComponentSize.Medium2.getHeight(), "Sit down right away to settle in.", 0),
-                new ButtonAnswer(true, (WIDTH - HEIGHT)/4, HEIGHT*17/24, ComponentSize.Medium2.getWidth(), ComponentSize.Medium2.getHeight(), "Stand by your seat until the host sits.", 1),
+                new ButtonAnswer(true, (WIDTH - HEIGHT)/4, HEIGHT/2, ComponentSize.Medium2.getWidth(), ComponentSize.Medium2.getHeight(), "1A", 0),
+                new ButtonAnswer(true, (WIDTH - HEIGHT)/4, HEIGHT*17/24, ComponentSize.Medium2.getWidth(), ComponentSize.Medium2.getHeight(), "1B", 1),
                 
                 new ButtonNext(false, WIDTH - ComponentSize.Small.getWidth(), HEIGHT - ComponentSize.Small.getHeight()*2, ComponentSize.Small.getWidth(), ComponentSize.Small.getHeight(), "next!")
                 )),
@@ -193,16 +204,139 @@ public class Main extends JFrame
         Screens.put("Question 2", new Screen(false, 0, 0, ComponentSize.ScreenDefault.getWidth(), ComponentSize.ScreenDefault.getHeight(), "Question 2", 
             new ArrayList<Img>(Arrays.asList(
                 new Img(true, WIDTH/2, HEIGHT/2, WIDTH, HEIGHT, "background"),
-                new Img(true, WIDTH/2, HEIGHT/2, HEIGHT, HEIGHT, "BOX")
+                new Img(true, WIDTH/2, HEIGHT/2, HEIGHT, HEIGHT, "2"),
+                
+                new Img(true, (WIDTH - HEIGHT)/4, HEIGHT/4, ComponentSize.Medium2.getWidth(), ComponentSize.Medium2.getHeight(), "Question 2"),
+                new Img(false, WIDTH - (WIDTH - HEIGHT)/4, HEIGHT*2/5, ComponentSize.BannerDefault.getWidth(), ComponentSize.BannerDefault.getHeight(), "NOTES")
                 )),
             new ArrayList<Button>(Arrays.asList(
-                //temp for infobox
-                //new ButtonIncorrect(true, (WIDTH - HEIGHT)/4, HEIGHT*1/5, ComponentSize.Medium2.getWidth(), ComponentSize.Medium2.getHeight(), "Incorrect"),
+                new ButtonAnswer(true, (WIDTH - HEIGHT)/4, HEIGHT/2, ComponentSize.Medium2.getWidth(), ComponentSize.Medium2.getHeight(), "2A", 0),
+                new ButtonAnswer(true, (WIDTH - HEIGHT)/4, HEIGHT*17/24, ComponentSize.Medium2.getWidth(), ComponentSize.Medium2.getHeight(), "2B", 1),
+
+                new ButtonNext(false, WIDTH - ComponentSize.Small.getWidth(), HEIGHT - ComponentSize.Small.getHeight()*2, ComponentSize.Small.getWidth(), ComponentSize.Small.getHeight(), "next!")
+                )),
+            new ArrayList<TextBox>(Arrays.asList(
+                )),
+            new ArrayList<Screen>(Arrays.asList(
+                exitDialogue))
+            )
+        );
+
+        Screens.put("Question 3", new Screen(false, 0, 0, ComponentSize.ScreenDefault.getWidth(), ComponentSize.ScreenDefault.getHeight(), "Question 3", 
+            new ArrayList<Img>(Arrays.asList(
+                new Img(true, WIDTH/2, HEIGHT/2, WIDTH, HEIGHT, "background"),
+                new Img(true, WIDTH/2, HEIGHT/2, HEIGHT, HEIGHT, "3"),
                 
-                new ButtonAnswer(true, (WIDTH - HEIGHT)/4, HEIGHT/2, ComponentSize.Medium2.getWidth(), ComponentSize.Medium2.getHeight(), "Everything looks delicious! Start eating immediately.", 0),
-                new ButtonAnswer(true, (WIDTH - HEIGHT)/4, HEIGHT*17/24, ComponentSize.Medium2.getWidth(), ComponentSize.Medium2.getHeight(), "Bow slightly and say “Itadakimasu” to express gratitude for the meal and the effort that went into preparing it.", 1)
-                //,
-                //new ButtonNext(false, WIDTH - ComponentSize.Small.getWidth(), HEIGHT - ComponentSize.Small.getHeight()*2, ComponentSize.Small.getWidth(), ComponentSize.Small.getHeight(), "next!")
+                new Img(true, (WIDTH - HEIGHT)/4, HEIGHT/4, ComponentSize.Medium2.getWidth(), ComponentSize.Medium2.getHeight(), "Question 3"),
+                new Img(false, WIDTH - (WIDTH - HEIGHT)/4, HEIGHT*2/5, ComponentSize.BannerDefault.getWidth(), ComponentSize.BannerDefault.getHeight(), "NOTES")
+                )),
+            new ArrayList<Button>(Arrays.asList(
+                new ButtonAnswer(true, (WIDTH - HEIGHT)/4, HEIGHT/2, ComponentSize.Medium2.getWidth(), ComponentSize.Medium2.getHeight(), "3A", 0),
+                new ButtonAnswer(true, (WIDTH - HEIGHT)/4, HEIGHT*17/24, ComponentSize.Medium2.getWidth(), ComponentSize.Medium2.getHeight(), "3B", 1),
+
+                new ButtonNext(false, WIDTH - ComponentSize.Small.getWidth(), HEIGHT - ComponentSize.Small.getHeight()*2, ComponentSize.Small.getWidth(), ComponentSize.Small.getHeight(), "next!")
+                )),
+            new ArrayList<TextBox>(Arrays.asList(
+                )),
+            new ArrayList<Screen>(Arrays.asList(
+                exitDialogue))
+            )
+        );
+
+        Screens.put("Question 4", new Screen(false, 0, 0, ComponentSize.ScreenDefault.getWidth(), ComponentSize.ScreenDefault.getHeight(), "Question 4", 
+            new ArrayList<Img>(Arrays.asList(
+                new Img(true, WIDTH/2, HEIGHT/2, WIDTH, HEIGHT, "background"),
+                new Img(true, WIDTH/2, HEIGHT/2, HEIGHT, HEIGHT, "4"),
+                
+                new Img(true, (WIDTH - HEIGHT)/4, HEIGHT/4, ComponentSize.Medium2.getWidth(), ComponentSize.Medium2.getHeight(), "Question 4"),
+                new Img(false, WIDTH - (WIDTH - HEIGHT)/4, HEIGHT*2/5, ComponentSize.BannerDefault.getWidth(), ComponentSize.BannerDefault.getHeight(), "NOTES")
+                )),
+            new ArrayList<Button>(Arrays.asList(
+                new ButtonAnswer(true, (WIDTH - HEIGHT)/4, HEIGHT/2, ComponentSize.Medium2.getWidth(), ComponentSize.Medium2.getHeight(), "4A", 0),
+                new ButtonAnswer(true, (WIDTH - HEIGHT)/4, HEIGHT*17/24, ComponentSize.Medium2.getWidth(), ComponentSize.Medium2.getHeight(), "4B", 1),
+
+                new ButtonNext(false, WIDTH - ComponentSize.Small.getWidth(), HEIGHT - ComponentSize.Small.getHeight()*2, ComponentSize.Small.getWidth(), ComponentSize.Small.getHeight(), "next!")
+                )),
+            new ArrayList<TextBox>(Arrays.asList(
+                )),
+            new ArrayList<Screen>(Arrays.asList(
+                exitDialogue))
+            )
+        );
+
+        Screens.put("Question 5", new Screen(false, 0, 0, ComponentSize.ScreenDefault.getWidth(), ComponentSize.ScreenDefault.getHeight(), "Question 5", 
+            new ArrayList<Img>(Arrays.asList(
+                new Img(true, WIDTH/2, HEIGHT/2, WIDTH, HEIGHT, "background"),
+                new Img(true, WIDTH/2, HEIGHT/2, HEIGHT, HEIGHT, "5"),
+                
+                new Img(true, (WIDTH - HEIGHT)/4, HEIGHT/4, ComponentSize.Medium2.getWidth(), ComponentSize.Medium2.getHeight(), "Question 5"),
+                new Img(false, WIDTH - (WIDTH - HEIGHT)/4, HEIGHT*2/5, ComponentSize.BannerDefault.getWidth(), ComponentSize.BannerDefault.getHeight(), "NOTES")
+                )),
+            new ArrayList<Button>(Arrays.asList(
+                new ButtonAnswer(true, (WIDTH - HEIGHT)/4, HEIGHT/2, ComponentSize.Medium2.getWidth(), ComponentSize.Medium2.getHeight(), "5A", 0),
+                new ButtonAnswer(true, (WIDTH - HEIGHT)/4, HEIGHT*17/24, ComponentSize.Medium2.getWidth(), ComponentSize.Medium2.getHeight(), "5B", 1),
+
+                new ButtonNext(false, WIDTH - ComponentSize.Small.getWidth(), HEIGHT - ComponentSize.Small.getHeight()*2, ComponentSize.Small.getWidth(), ComponentSize.Small.getHeight(), "next!")
+                )),
+            new ArrayList<TextBox>(Arrays.asList(
+                )),
+            new ArrayList<Screen>(Arrays.asList(
+                exitDialogue))
+            )
+        );
+
+        Screens.put("Question 6", new Screen(false, 0, 0, ComponentSize.ScreenDefault.getWidth(), ComponentSize.ScreenDefault.getHeight(), "Question 6", 
+            new ArrayList<Img>(Arrays.asList(
+                new Img(true, WIDTH/2, HEIGHT/2, WIDTH, HEIGHT, "background"),
+                new Img(true, WIDTH/2, HEIGHT/2, HEIGHT, HEIGHT, "6"),
+                
+                new Img(true, (WIDTH - HEIGHT)/4, HEIGHT/4, ComponentSize.Medium2.getWidth(), ComponentSize.Medium2.getHeight(), "Question 6"),
+                new Img(false, WIDTH - (WIDTH - HEIGHT)/4, HEIGHT*2/5, ComponentSize.BannerDefault.getWidth(), ComponentSize.BannerDefault.getHeight(), "NOTES")
+                )),
+            new ArrayList<Button>(Arrays.asList(
+                new ButtonAnswer(true, (WIDTH - HEIGHT)/4, HEIGHT/2, ComponentSize.Medium2.getWidth(), ComponentSize.Medium2.getHeight(), "6A", 0),
+                new ButtonAnswer(true, (WIDTH - HEIGHT)/4, HEIGHT*17/24, ComponentSize.Medium2.getWidth(), ComponentSize.Medium2.getHeight(), "6B", 1),
+
+                new ButtonNext(false, WIDTH - ComponentSize.Small.getWidth(), HEIGHT - ComponentSize.Small.getHeight()*2, ComponentSize.Small.getWidth(), ComponentSize.Small.getHeight(), "next!")
+                )),
+            new ArrayList<TextBox>(Arrays.asList(
+                )),
+            new ArrayList<Screen>(Arrays.asList(
+                exitDialogue))
+            )
+        );
+
+        Screens.put("Question 7", new Screen(false, 0, 0, ComponentSize.ScreenDefault.getWidth(), ComponentSize.ScreenDefault.getHeight(), "Question 7", 
+            new ArrayList<Img>(Arrays.asList(
+                new Img(true, WIDTH/2, HEIGHT/2, WIDTH, HEIGHT, "background"),
+                new Img(true, WIDTH/2, HEIGHT/2, HEIGHT, HEIGHT, "7"),
+                
+                new Img(true, (WIDTH - HEIGHT)/4, HEIGHT/4, ComponentSize.Medium2.getWidth(), ComponentSize.Medium2.getHeight(), "Question 7"),
+                new Img(false, WIDTH - (WIDTH - HEIGHT)/4, HEIGHT*2/5, ComponentSize.BannerDefault.getWidth(), ComponentSize.BannerDefault.getHeight(), "NOTES")
+                )),
+            new ArrayList<Button>(Arrays.asList(
+                new ButtonAnswer(true, (WIDTH - HEIGHT)/4, HEIGHT/2, ComponentSize.Medium2.getWidth(), ComponentSize.Medium2.getHeight(), "7A", 0),
+                new ButtonAnswer(true, (WIDTH - HEIGHT)/4, HEIGHT*17/24, ComponentSize.Medium2.getWidth(), ComponentSize.Medium2.getHeight(), "7B", 1),
+                
+
+                new ButtonNext(false, WIDTH - ComponentSize.Small.getWidth(), HEIGHT - ComponentSize.Small.getHeight()*2, ComponentSize.Small.getWidth(), ComponentSize.Small.getHeight(), "next!")
+                )),
+            new ArrayList<TextBox>(Arrays.asList(
+                )),
+            new ArrayList<Screen>(Arrays.asList(
+                exitDialogue))
+            )
+        );
+        
+        Screens.put("Question 8", new Screen(false, 0, 0, ComponentSize.ScreenDefault.getWidth(), ComponentSize.ScreenDefault.getHeight(), "Question 8", 
+            new ArrayList<Img>(Arrays.asList(
+                new Img(true, WIDTH/2, HEIGHT/2, WIDTH, HEIGHT, "background"),
+
+                new Img(true, WIDTH/4 - 20, HEIGHT*2/3, WIDTH/4, HEIGHT/4, "context"),
+                new Img(true, WIDTH/2, HEIGHT*2/3, WIDTH/4, HEIGHT/4, "audience"),
+                new Img(true, WIDTH*3/4 + 20, HEIGHT*2/3, WIDTH/4, HEIGHT/4, "purpose")
+                )),
+            new ArrayList<Button>(Arrays.asList(
                 )),
             new ArrayList<TextBox>(Arrays.asList(
                 )),

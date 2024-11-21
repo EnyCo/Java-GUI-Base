@@ -5,7 +5,7 @@ import java.util.*;
 
 import javax.imageio.ImageIO;
 
-public class Screen extends GUIComponent{
+public class Screen extends GUIComponent {
     private boolean visible;
     private ArrayList<Img> imgs;
     private ArrayList<Button> buttons;

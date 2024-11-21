@@ -6,6 +6,7 @@ public class ThreadInputProcess implements Runnable {
     public void run() {
         while (true) {   
             Main.getKeyboard().updateKeyStates();
+            Main.getMouse().updateButtonStates();
 
             Point p = Main.getMouse().getPosition(); 
             int x = (int)(p.getX());
@@ -40,7 +41,11 @@ public class ThreadInputProcess implements Runnable {
             
             if (Main.getKeyboard().keyDownOnce( KeyEvent.VK_ENTER )) {
                 if (Main.getActiveTextBox() != null) {
-                    //String name = Main.getActiveTextBox().onEnter();
+                    String user = Main.getActiveTextBox().onEnter();
+
+                    
+                    Main.setUser(user);
+                    //System.out.println(Main.user);
                     
                     Main.getActiveScreen().getButtons().get(0).setVisible(true);
                     Main.setActiveTextBox(null);

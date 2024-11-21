@@ -19,6 +19,10 @@ public class ButtonNext extends Button {
             String name = Main.popVisibleScreens().getName();
             int x = Integer.parseInt(name.substring(name.length() - 1)) + 1;
             Main.pushVisibleScreens(Main.getScreens().get("Question " + x));
+
+            if (x == 8) {
+                Main.getActiveScreen().getImgs().add(new Img(true, Main.getWidthScreen()/2, Main.getHeightScreen()/3, Main.getWidthScreen()/3, Main.getHeightScreen()/3, Main.getUser() + " you got " + Main.getScore() + "/" + Main.getTotal() + "correct!"));
+            }
         } catch (Exception e) {
             System.out.println("NEXT DOESN'T EXIST");
         }
