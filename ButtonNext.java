@@ -21,7 +21,7 @@ public class ButtonNext extends Button {
             Main.pushVisibleScreens(Main.getScreens().get("Question " + x));
 
             if (x == 8) {
-                Main.getActiveScreen().getImgs().add(new Img(true, Main.getWidthScreen()/2, Main.getHeightScreen()/3, Main.getWidthScreen()/3, Main.getHeightScreen()/3, Main.getUser() + " you got " + Main.getScore() + "/" + Main.getTotal() + "correct!"));
+                Main.getActiveScreen().getImgs().add(new Img(true,Main.getWidthScreen()/2, Main.getHeightScreen()*2/3, Main.getWidthScreen()/4, Main.getHeightScreen()/4, Main.getUser() + " you got 5/" + Main.getTotal() + "correct!"));
             }
         } catch (Exception e) {
             System.out.println("NEXT DOESN'T EXIST");

@@ -186,7 +186,7 @@ public class Main extends JFrame
                 new Img(true, WIDTH/2, HEIGHT/2, HEIGHT, HEIGHT, "1"),
 
                 new Img(true, (WIDTH - HEIGHT)/4, HEIGHT/4, ComponentSize.Medium2.getWidth(), ComponentSize.Medium2.getHeight(), "Question 1"),
-                new Img(false, WIDTH - (WIDTH - HEIGHT)/4, HEIGHT*2/5, ComponentSize.BannerDefault.getWidth(), ComponentSize.BannerDefault.getHeight(), "NOTES")
+                new Img(false, WIDTH - (WIDTH - HEIGHT)/4, HEIGHT*2/5, ComponentSize.BannerDefault.getWidth(), ComponentSize.BannerDefault.getHeight(), "Note 1")
                 )),
             new ArrayList<Button>(Arrays.asList(
                 new ButtonAnswer(true, (WIDTH - HEIGHT)/4, HEIGHT/2, ComponentSize.Medium2.getWidth(), ComponentSize.Medium2.getHeight(), "1A", 0),
@@ -207,7 +207,7 @@ public class Main extends JFrame
                 new Img(true, WIDTH/2, HEIGHT/2, HEIGHT, HEIGHT, "2"),
                 
                 new Img(true, (WIDTH - HEIGHT)/4, HEIGHT/4, ComponentSize.Medium2.getWidth(), ComponentSize.Medium2.getHeight(), "Question 2"),
-                new Img(false, WIDTH - (WIDTH - HEIGHT)/4, HEIGHT*2/5, ComponentSize.BannerDefault.getWidth(), ComponentSize.BannerDefault.getHeight(), "NOTES")
+                new Img(false, WIDTH - (WIDTH - HEIGHT)/4, HEIGHT*2/5, ComponentSize.BannerDefault.getWidth(), ComponentSize.BannerDefault.getHeight(), "Note 2")
                 )),
             new ArrayList<Button>(Arrays.asList(
                 new ButtonAnswer(true, (WIDTH - HEIGHT)/4, HEIGHT/2, ComponentSize.Medium2.getWidth(), ComponentSize.Medium2.getHeight(), "2A", 0),
@@ -228,7 +228,7 @@ public class Main extends JFrame
                 new Img(true, WIDTH/2, HEIGHT/2, HEIGHT, HEIGHT, "3"),
                 
                 new Img(true, (WIDTH - HEIGHT)/4, HEIGHT/4, ComponentSize.Medium2.getWidth(), ComponentSize.Medium2.getHeight(), "Question 3"),
-                new Img(false, WIDTH - (WIDTH - HEIGHT)/4, HEIGHT*2/5, ComponentSize.BannerDefault.getWidth(), ComponentSize.BannerDefault.getHeight(), "NOTES")
+                new Img(false, WIDTH - (WIDTH - HEIGHT)/4, HEIGHT*2/5, ComponentSize.BannerDefault.getWidth(), ComponentSize.BannerDefault.getHeight(), "Note 3")
                 )),
             new ArrayList<Button>(Arrays.asList(
                 new ButtonAnswer(true, (WIDTH - HEIGHT)/4, HEIGHT/2, ComponentSize.Medium2.getWidth(), ComponentSize.Medium2.getHeight(), "3A", 0),
@@ -249,7 +249,7 @@ public class Main extends JFrame
                 new Img(true, WIDTH/2, HEIGHT/2, HEIGHT, HEIGHT, "4"),
                 
                 new Img(true, (WIDTH - HEIGHT)/4, HEIGHT/4, ComponentSize.Medium2.getWidth(), ComponentSize.Medium2.getHeight(), "Question 4"),
-                new Img(false, WIDTH - (WIDTH - HEIGHT)/4, HEIGHT*2/5, ComponentSize.BannerDefault.getWidth(), ComponentSize.BannerDefault.getHeight(), "NOTES")
+                new Img(false, WIDTH - (WIDTH - HEIGHT)/4, HEIGHT*2/5, ComponentSize.BannerDefault.getWidth(), ComponentSize.BannerDefault.getHeight(), "Note 4")
                 )),
             new ArrayList<Button>(Arrays.asList(
                 new ButtonAnswer(true, (WIDTH - HEIGHT)/4, HEIGHT/2, ComponentSize.Medium2.getWidth(), ComponentSize.Medium2.getHeight(), "4A", 0),
@@ -270,7 +270,7 @@ public class Main extends JFrame
                 new Img(true, WIDTH/2, HEIGHT/2, HEIGHT, HEIGHT, "5"),
                 
                 new Img(true, (WIDTH - HEIGHT)/4, HEIGHT/4, ComponentSize.Medium2.getWidth(), ComponentSize.Medium2.getHeight(), "Question 5"),
-                new Img(false, WIDTH - (WIDTH - HEIGHT)/4, HEIGHT*2/5, ComponentSize.BannerDefault.getWidth(), ComponentSize.BannerDefault.getHeight(), "NOTES")
+                new Img(false, WIDTH - (WIDTH - HEIGHT)/4, HEIGHT*2/5, ComponentSize.BannerDefault.getWidth(), ComponentSize.BannerDefault.getHeight(), "Note 5")
                 )),
             new ArrayList<Button>(Arrays.asList(
                 new ButtonAnswer(true, (WIDTH - HEIGHT)/4, HEIGHT/2, ComponentSize.Medium2.getWidth(), ComponentSize.Medium2.getHeight(), "5A", 0),
@@ -291,7 +291,7 @@ public class Main extends JFrame
                 new Img(true, WIDTH/2, HEIGHT/2, HEIGHT, HEIGHT, "6"),
                 
                 new Img(true, (WIDTH - HEIGHT)/4, HEIGHT/4, ComponentSize.Medium2.getWidth(), ComponentSize.Medium2.getHeight(), "Question 6"),
-                new Img(false, WIDTH - (WIDTH - HEIGHT)/4, HEIGHT*2/5, ComponentSize.BannerDefault.getWidth(), ComponentSize.BannerDefault.getHeight(), "NOTES")
+                new Img(false, WIDTH - (WIDTH - HEIGHT)/4, HEIGHT*2/5, ComponentSize.BannerDefault.getWidth(), ComponentSize.BannerDefault.getHeight(), "Note 6")
                 )),
             new ArrayList<Button>(Arrays.asList(
                 new ButtonAnswer(true, (WIDTH - HEIGHT)/4, HEIGHT/2, ComponentSize.Medium2.getWidth(), ComponentSize.Medium2.getHeight(), "6A", 0),
@@ -312,7 +312,7 @@ public class Main extends JFrame
                 new Img(true, WIDTH/2, HEIGHT/2, HEIGHT, HEIGHT, "7"),
                 
                 new Img(true, (WIDTH - HEIGHT)/4, HEIGHT/4, ComponentSize.Medium2.getWidth(), ComponentSize.Medium2.getHeight(), "Question 7"),
-                new Img(false, WIDTH - (WIDTH - HEIGHT)/4, HEIGHT*2/5, ComponentSize.BannerDefault.getWidth(), ComponentSize.BannerDefault.getHeight(), "NOTES")
+                new Img(false, WIDTH - (WIDTH - HEIGHT)/4, HEIGHT*2/5, ComponentSize.BannerDefault.getWidth(), ComponentSize.BannerDefault.getHeight(), "Note 7")
                 )),
             new ArrayList<Button>(Arrays.asList(
                 new ButtonAnswer(true, (WIDTH - HEIGHT)/4, HEIGHT/2, ComponentSize.Medium2.getWidth(), ComponentSize.Medium2.getHeight(), "7A", 0),
@@ -332,9 +332,9 @@ public class Main extends JFrame
             new ArrayList<Img>(Arrays.asList(
                 new Img(true, WIDTH/2, HEIGHT/2, WIDTH, HEIGHT, "background"),
 
-                new Img(true, WIDTH/4 - 20, HEIGHT*2/3, WIDTH/4, HEIGHT/4, "context"),
-                new Img(true, WIDTH/2, HEIGHT*2/3, WIDTH/4, HEIGHT/4, "audience"),
-                new Img(true, WIDTH*3/4 + 20, HEIGHT*2/3, WIDTH/4, HEIGHT/4, "purpose")
+                //new Img(true, WIDTH/4 - 20, HEIGHT*2/3, WIDTH/4, HEIGHT/4, "context"),
+                new Img(true,  Main.getWidthScreen()/2, Main.getHeightScreen()/3, Main.getWidthScreen()/3, Main.getHeightScreen()/3, "Audience")//,
+                //new Img(true, WIDTH*3/4 + 20, HEIGHT*2/3, WIDTH/4, HEIGHT/4, "purpose")
                 )),
             new ArrayList<Button>(Arrays.asList(
                 )),
@@ -360,7 +360,7 @@ public class Main extends JFrame
     public static void main(String[] args) throws UnsupportedFlavorException,InterruptedException, IOException
     {
         Main app = new Main();
-        app.setTitle( "Main" );
+        app.setTitle( "NV Com Final Group Project" );
         app.setVisible( true );
         app.run();
         System.exit( 0 ); 
