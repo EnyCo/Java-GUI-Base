@@ -42,20 +42,13 @@ public class ThreadInputProcess implements Runnable {
             if (Main.getKeyboard().keyDownOnce( KeyEvent.VK_ENTER )) {
                 if (Main.getActiveTextBox() != null) {
                     String user = Main.getActiveTextBox().onEnter();
-
-                    
                     Main.setUser(user);
-                    //System.out.println(Main.user);
-                    
-                    Main.getActiveScreen().getButtons().get(0).setVisible(true);
-                    Main.setActiveTextBox(null);
                 }
             }
             if (Main.getKeyboard().keyDownOnce( KeyEvent.VK_ESCAPE )) {
                 if (Main.getActiveTextBox() != null) {
                     Main.setActiveTextBox(null);
                 } 
-
 
                 if (Main.getActiveScreen().getName().equals("Exit Screen")) {
                     Main.popVisibleScreens();
